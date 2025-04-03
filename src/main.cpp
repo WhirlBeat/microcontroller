@@ -20,7 +20,17 @@ void setup() {
     lcd_display.begin();
 }
 
+byte beans = 1;
+BtnManager::Button button(PIN_BTN_ACTION);
+
 void loop() {
     scene_loader.on_tick();
+
+    led_control.write(beans);
+
+    button.on_tick();
+    if (button.is_clicked) beans = beans << 1;
+
+    if (beans == 0) beans = 1;
     delay(1);
 }

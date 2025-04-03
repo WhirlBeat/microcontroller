@@ -22,10 +22,8 @@ namespace Scene {
         virtual const Source& render();
         virtual void on_btn_action_click();
         virtual void on_btn_action_held_repeat();
-        virtual void on_btn_up_click();
-        virtual void on_btn_up_held_repeat();
-        virtual void on_btn_down_click();
-        virtual void on_btn_down_held_repeat();
+        virtual void on_btn_select_click();
+        virtual void on_btn_select_held_repeat();
     };
 
     class BlankSource : public Source {
@@ -41,8 +39,7 @@ namespace Scene {
     public:
         Source& source;
         BtnManager::Button btn_action;
-        BtnManager::Button btn_up;
-        BtnManager::Button btn_down;
+        BtnManager::Button btn_select;
         explicit Loader(Source& source);
 
         void on_tick();
