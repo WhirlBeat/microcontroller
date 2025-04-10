@@ -13,24 +13,18 @@ LCD::Display lcd_display{};
 
 SceneSources::MainMenu main_menu = SceneSources::MainMenu(lcd_display);
 Scene::Source& main_menu_ref = main_menu;
-Scene::Loader scene_loader(main_menu_ref);
+
+SceneSources::Timing timing(lcd_display, led_control);
+Scene::Loader scene_loader(timing);
+
 
 void setup() {
     Serial.begin(9600);
+    delay(5000);
     lcd_display.begin();
 }
 
-byte beans = 1;
-BtnManager::Button button(PIN_BTN_ACTION);
-
 void loop() {
     scene_loader.on_tick();
-
-    led_control.write(beans);
-
-    button.on_tick();
-    if (button.is_clicked) beans = beans << 1;
-
-    if (beans == 0) beans = 1;
     delay(1);
 }
