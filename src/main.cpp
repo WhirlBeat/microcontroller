@@ -1,30 +1,23 @@
 #include <Arduino.h>
 
-#include <managers.hpp>
-#include <pins.hpp>
-#include "../lib/scene/scene.hpp"
+#include <drivers.hpp>
+#include <engine.hpp>
 
 
-ShiftRegister::LEDControl led_control(PIN_SHIFT_DATA, PIN_SHIFT_CLOCK, PIN_SHIFT_LATCH);
 
-// LCD is always on pins A4 and A5
-LCD::Display lcd_display{};
+Engine::MainMenuScene scene{};
 
-
-SceneSources::MainMenu main_menu = SceneSources::MainMenu(lcd_display);
-Scene::Source& main_menu_ref = main_menu;
-
-SceneSources::Timing timing(lcd_display, led_control);
-Scene::Loader scene_loader(timing);
+Engine::SceneLoader scene_loader{scene};
 
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
     delay(5000);
-    lcd_display.begin();
+
+    Drivers::display_driver.begin();
 }
 
 void loop() {
-    scene_loader.on_tick();
+    scene_loader.tick();
     delay(1);
 }
