@@ -25,10 +25,16 @@ namespace Drivers {
     template <unsigned int LightsCount>
     class LightsDriver {
     public:
-        int lights_count;
+        const int lights_count;
         CRGB led_array[LightsCount];
 
         LightsDriver() : lights_count(LightsCount) {};
+
+        void clear_led_array() {
+            for (int idx = 0; idx < this->lights_count; idx++) {
+                this->led_array[idx] = Colors::BLACK;
+            }
+        }
 
         virtual void show() = 0;
     };
@@ -38,12 +44,15 @@ namespace Drivers {
     template <unsigned int LightsCount>
     class LEDStripLightsDriver : public LightsDriver<LightsCount> {
     public:
-        LEDStripLightsDriver(int brightness = 128) : LightsDriver<LightsCount>() {
+        int brightness;
+
+        LEDStripLightsDriver(int brightness = 128) : LightsDriver<LightsCount>(), brightness(brightness) {
             FastLED.addLeds<WS2812B, Pins::PIN_LEDSTRIP_DATA, GRB>(this->led_array, LightsCount);
-            FastLED.setBrightness(brightness);
+            FastLED.setBrightness(this->brightness);
         }
 
         void show() override {
+            FastLED.setBrightness(this->brightness);
             FastLED.show();
         }
     };

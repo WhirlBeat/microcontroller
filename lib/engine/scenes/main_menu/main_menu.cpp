@@ -1,13 +1,19 @@
 #include "main_menu.hpp"
 
 
-const char* choices[] = {
+const size_t choices_count = 10;
+const char* choices[choices_count] = {
     "Start",
     "Settings",
     "About",
-    "Exit"
+    "Exit",
+    "More",
+    "Moooorreee",
+    "Lmao?",
+    "wawa",
+    "wawawawawawa",
+    "wah"
 };
-const size_t choices_count = 4;
 
 
 namespace Engine {
