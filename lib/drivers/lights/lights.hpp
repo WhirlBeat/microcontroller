@@ -39,7 +39,7 @@ namespace Drivers {
     class LEDStripLightsDriver : public LightsDriver<LightsCount> {
     public:
         LEDStripLightsDriver(int brightness = 128) : LightsDriver<LightsCount>() {
-            FastLED.addLeds<NEOPIXEL, Pins::PIN_LEDSTRIP_DATA>(this->led_array, LightsCount);
+            FastLED.addLeds<WS2812B, Pins::PIN_LEDSTRIP_DATA, GRB>(this->led_array, LightsCount);
             FastLED.setBrightness(brightness);
         }
 
@@ -50,6 +50,5 @@ namespace Drivers {
 
 
 
-    extern LEDStripLightsDriver<ComponentParams::LED_COUNT> ledstrip_lights_driver;
     extern LightsDriver<ComponentParams::LED_COUNT> &lights_driver;
 }

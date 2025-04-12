@@ -176,5 +176,5 @@ namespace Drivers {
     };
     SerialDisplayDriver serial_display_driver{};
 
-    DisplayDriver &display_driver = serial_display_driver;
+    DisplayDriver &display_driver = lcd_display_driver;
 }
