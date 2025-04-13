@@ -67,7 +67,7 @@ namespace Engine {
         )) {
             for (int i = lower_bound; i < upper_bound_exc; i++) {
                 Drivers::lights_driver.led_array[i] = ColorFromPalette(
-                    Gradients::rainbow_pallette,
+                    Gradients::rainbow_palette,
                     floor(((float)this->select_idx / (float)this->choices_count) * 255)
                 );
             }

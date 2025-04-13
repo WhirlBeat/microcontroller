@@ -1,33 +1,13 @@
 #include "timing.hpp"
 
+#include <colors.hpp>
 
 
-CRGB interpolate_color(CRGB &start, CRGB &end, double t) {
-    return CRGB(
-        start.r + (end.r - start.r) * t,
-        start.g + (end.g - start.g) * t,
-        start.b + (end.b - start.b) * t
-    );
-}
-
-
-CRGB gradient[] = {
-    CRGB::Blue,
-    CRGB::Red,
-    CRGB::Orange,
-    CRGB::Green,
-    CRGB::GhostWhite
-};
-const size_t gradient_size = 5;
 
 CRGB get_led_color(double t) {
-    const size_t segments = gradient_size - 1;
-    const size_t current_segment = floor(t * segments);
-
-    return interpolate_color(
-        gradient[current_segment],
-        gradient[current_segment + 1],
-        (t * segments) - current_segment
+    return ColorFromPalette(
+        Gradients::rainbow_palette,
+        floor(t * 255)
     );
 }
 

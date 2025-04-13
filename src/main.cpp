@@ -2,14 +2,15 @@
 
 #include <drivers.hpp>
 #include <engine.hpp>
+#include <tools.hpp>
 
 
 
-
-
-Engine::MainMenuScene scene{};
+Engine::OneTimingScene scene{};
 
 Engine::SceneLoader scene_loader{scene};
+
+Tools::TPS tps;
 
 
 void setup() {
@@ -26,5 +27,6 @@ void setup() {
 
 void loop() {
     scene_loader.tick();
+    tps.tick();
     delay(1);
 }

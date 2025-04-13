@@ -23,6 +23,16 @@ DEFINE_GRADIENT_PALETTE(rainbow_gp) {
 };
 
 
+DEFINE_GRADIENT_PALETTE(timing_gp) {
+    percent_to_byte(0), 0, 0, 255,
+    percent_to_byte(25), 255, 0, 0,
+    percent_to_byte(50), 255, 165, 0,
+    percent_to_byte(75), 0, 255, 0,
+    percent_to_byte(100), 255, 255, 255,
+};
+
+
 namespace Gradients {
-    CRGBPalette16 rainbow_pallette = rainbow_gp;
+    CRGBPalette16 rainbow_palette = rainbow_gp;
+    CRGBPalette16 timing_palette = timing_gp;
 }
