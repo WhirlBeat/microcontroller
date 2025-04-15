@@ -18,7 +18,7 @@ namespace Engine {
         double loop_state = 0;
         int ticks_per_loop = 200;
 
-        int goal_led_idx = 50;
+        int goal_led_idx = ceil(Drivers::lights_driver.lights_count / 2);
         size_t goal_led_timer = 0;
         size_t goal_led_flash_every = 100;
 
