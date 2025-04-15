@@ -4,14 +4,6 @@
 
 
 
-CRGB get_led_color(double t) {
-    return ColorFromPalette(
-        Gradients::timing_palette,
-        floor(t * 255)
-    );
-}
-
-
 namespace Engine {
     OneTimingScene::OneTimingScene() : Scene() {}
 
