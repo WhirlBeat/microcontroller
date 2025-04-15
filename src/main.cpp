@@ -7,7 +7,7 @@
 
 
 
-Engine::MainMenuScene scene{};
+Engine::OneTimingScene scene{};
 
 Engine::SceneLoader scene_loader{scene};
 

@@ -16,7 +16,7 @@ namespace Engine {
 
         // 0 means at goal led
         double loop_state = 0;
-        int ticks_per_loop = 1000;
+        int ticks_per_loop = 200;
 
         int goal_led_idx = 50;
         size_t goal_led_timer = 0;
