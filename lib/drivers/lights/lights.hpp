@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Vector.h>
 #include <FastLED.h>
 
 #include <global.hpp>

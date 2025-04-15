@@ -6,11 +6,18 @@
 
 namespace Drivers {
     ButtonDriver::ButtonDriver(int pin) : pin(pin) {
-        pinMode(pin, INPUT_PULLUP);
+        this->set_pin_mode(pin);
+    }
+
+    bool ButtonDriver::read_value() {
+        return digitalRead(this->pin) == LOW;
     }
 
     void ButtonDriver::tick() {
-        bool button_state = digitalRead(this->pin) == LOW;
+        bool button_state = this->read_value();
+
+        Serial.println(button_state);
+
         if (button_state) {
             this->held_state = true;
             this->on_held();
@@ -52,6 +59,9 @@ namespace Drivers {
         ticks_since_press = 0;
     }
 
+    void ButtonDriver::set_pin_mode(int pin) {
+        pinMode(pin, INPUT_PULLUP);
+    }
 
     ButtonDriver button_driver_left{Pins::PIN_BUTTON_LEFT};
     ButtonDriver button_driver_action{Pins::PIN_BUTTON_ACTION};

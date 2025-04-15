@@ -17,7 +17,7 @@ namespace Pins {
 
 
     const int PIN_BUTTON_LEFT = D3;
-    const int PIN_BUTTON_ACTION = D5;
+    const int PIN_BUTTON_ACTION = D4;
     const int PIN_BUTTON_RIGHT = D6;
 
     const int PIN_LEDSTRIP_DATA = D7;

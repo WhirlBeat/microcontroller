@@ -1,7 +1,6 @@
 #pragma once
 
 #include <drivers.hpp>
-#include <Vector.h>
 #include "../../scene_parts/scene_parts.hpp"
 #include "../../base/base.hpp"
 

@@ -9,6 +9,8 @@ namespace Drivers {
     public:
         ButtonDriver(int pin);
 
+        bool read_value();
+
         void tick();
 
         bool is_held() const;
@@ -24,6 +26,9 @@ namespace Drivers {
 
         void on_held();
         void on_release();
+
+
+        static void set_pin_mode(int pin);
     };
 
 
