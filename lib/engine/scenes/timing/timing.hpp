@@ -17,15 +17,18 @@ namespace Engine {
 
         // 0 means at goal led
         double loop_state = 0;
-        int ticks_per_loop = 500;
+        int ticks_per_loop = 1000;
 
-        size_t previous_on_led_idx = 10000;
+        int goal_led_idx = 50;
+        size_t goal_led_timer = 0;
+        size_t goal_led_flash_every = 100;
 
-        size_t stop_length_ticks = 3000;
+        size_t stop_length_ticks = 500;
         size_t stop_timer = 0;
-        size_t stop_flash_every = 500;
+        size_t stop_flash_every = 50;
 
         int max_score = 10000;
+        double curve = 0.25;
 
         OneTimingScene();
 
@@ -36,8 +39,12 @@ namespace Engine {
 
         void on_trigger_stop();
 
-        size_t get_current_led_idx();
+        size_t get_internal_led_idx();
 
-        int calculate_score();
+        size_t get_shown_led_idx();
+        CRGB get_shown_led_color();
+
+        int calculate_score_raw();
+        int calculate_score_weighted();
     };
 }

@@ -3,6 +3,7 @@
 #include <drivers.hpp>
 #include <engine.hpp>
 #include <tools.hpp>
+#include <colors.hpp>
 
 
 
@@ -18,15 +19,19 @@ void setup() {
     digitalWrite(LED_BUILTIN, LOW); // apparently LOW = on for esp8266 lmao
 
     Serial.begin(115200);
+    Drivers::display_driver.begin();
+    Drivers::lights_driver.show();
     delay(5000);
 
-    Drivers::display_driver.begin();
 
     digitalWrite(LED_BUILTIN, HIGH);
 }
 
+uint8_t a = 0;
+
 void loop() {
     scene_loader.tick();
     tps.tick();
+
     delay(1);
 }

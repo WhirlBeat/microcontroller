@@ -6,20 +6,6 @@
 #include <global.hpp>
 
 
-namespace Colors {
-    const CRGB BLACK = CRGB(0, 0, 0);
-    const CRGB WHITE = CRGB(255, 255, 255);
-
-    const CRGB RED = CRGB(255, 0, 0);
-    const CRGB ORANGE = CRGB(255, 165, 0);
-    const CRGB YELLOW = CRGB(255, 255, 0);
-    const CRGB GREEN = CRGB(0, 255, 0);
-    const CRGB LIGHT_BLUE = CRGB(0, 255, 255);
-    const CRGB BLUE = CRGB(0, 0, 255);
-    const CRGB DARK_BLUE = CRGB(0, 0, 128);
-    const CRGB PURPLE = CRGB(128, 0, 128);
-}
-
 
 namespace Drivers {
     template <unsigned int LightsCount>
@@ -32,7 +18,7 @@ namespace Drivers {
 
         void clear_led_array() {
             for (int idx = 0; idx < this->lights_count; idx++) {
-                this->led_array[idx] = Colors::BLACK;
+                this->led_array[idx] = CRGB::Black;
             }
         }
 
@@ -48,6 +34,7 @@ namespace Drivers {
 
         LEDStripLightsDriver(int brightness = 128) : LightsDriver<LightsCount>(), brightness(brightness) {
             FastLED.addLeds<WS2812B, Pins::PIN_LEDSTRIP_DATA, GRB>(this->led_array, LightsCount);
+            FastLED.setMaxRefreshRate(0);
             FastLED.setBrightness(this->brightness);
         }
 
