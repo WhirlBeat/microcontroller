@@ -16,8 +16,6 @@ namespace Drivers {
     void ButtonDriver::tick() {
         bool button_state = this->read_value();
 
-        Serial.println(button_state);
-
         if (button_state) {
             this->held_state = true;
             this->on_held();
