@@ -1,6 +1,9 @@
 #include <Arduino.h>
 
 
+// RENAME THIS FILE TO network.hpp TO USE
+
+
 namespace Network {
     // Wifi information
 
