@@ -131,7 +131,7 @@ namespace Engine {
     }
 
 
-    // Ex. [10, 7.5, 5, 0, 5, 7.5]
+    // Ex. [10, 7.5, 5, 2.5, 0, 2.5, 5, 7.5] for idx = 0, 1, 2, ..., 6, 7
     int TimingScenePart::calculate_score_raw() {
         const int internal_led_idx = this->get_internal_led_idx();
         if (internal_led_idx == 0) return this->max_score;
