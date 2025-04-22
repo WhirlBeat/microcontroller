@@ -1,5 +1,7 @@
 #include <WiFi.h>
 
+#include "../display/display.hpp"
+
 #include "network.hpp"
 
 
@@ -10,42 +12,56 @@ namespace Drivers {
         const char* password
     ) : ssid(ssid), password(password) {}
 
-    bool NetworkDriver::is_connected() {
-        return WiFi.status() == WL_CONNECTED;
-    }
-
-    bool NetworkDriver::begin() {
-        WiFi.begin(NetworkParams::ssid, NetworkParams::password);
-        Serial.println("Connecting");
-
-        bool limit_reached = true;
-        for (int retry_idx = 0; retry_idx < this->retry_count; retry_idx++) {
-            Serial.print("Try #");
-            Serial.print(retry_idx + 1);
-            Serial.print(" of ");
-            Serial.print(this->retry_count);
-            Serial.print("... ");
-
-            delay(this->retry_after);
-
-            if (this->is_connected()) {
-                limit_reached = false;
-                break;
-            }
-        }
-
+    void NetworkDriver::ensure_connection() {
+        Serial.println("Ensuring connection to WiFi:");
+        Serial.print("SSID: ");
+        Serial.println(this->ssid);
+        Serial.print("Password: ");
+        Serial.println(this->password);
         Serial.println("");
 
-        if (limit_reached) {
-            Serial.println("Failed to connect to WiFi network.");
-            return false;
+        int tries = 1;
+        while (true) {
+            display_driver.clear_all();
+            display_driver.print_center(0, "Connecting to WiFi:");
+            display_driver.print_center(1, ssid);
+            display_driver.print_center(2, (String(tries) + " tries").c_str());
+
+            WiFi.begin(NetworkParams::ssid, NetworkParams::password);
+            while (
+                WiFi.status() != WL_CONNECTED &&
+                WiFi.status() != WL_CONNECT_FAILED &&
+                WiFi.status() != WL_CONNECTION_LOST
+            ) {
+                Serial.print("Idle status: ");
+                Serial.println(WiFi.status());
+                delay(100);
+            }
+
+            Serial.print("Finished status: ");
+            Serial.println(WiFi.status());
+
+            if (WiFi.status() == WL_CONNECTED) {
+                Serial.println("Connected!");
+                break;
+            }
+
+            display_driver.print_center(3, String(WiFi.status()).c_str());
+
+            tries++;
+            delay(this->retry_after);
+            Serial.println("Reconnecting...");
         };
 
+        display_driver.clear_all();
+    }
 
+    void NetworkDriver::begin() {
+        this->ensure_connection();
+
+        Serial.println("");
         Serial.print("Connected to WiFi network with IP Address: ");
         Serial.println(WiFi.localIP());
-
-        return true;
     }
 
     NetworkDriver network_driver{};

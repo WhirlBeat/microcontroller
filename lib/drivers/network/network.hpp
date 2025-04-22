@@ -11,16 +11,15 @@ namespace Drivers {
         const char* password;
 
         const int retry_after = 500;
-        const int retry_count = 10;
 
         NetworkDriver(
             const char* ssid = NetworkParams::ssid,
             const char* password = NetworkParams::password
         );
 
-        bool is_connected();
+        void ensure_connection();
 
-        bool begin();
+        void begin();
     };
 
 
