@@ -13,6 +13,11 @@ namespace Drivers {
     ) : ssid(ssid), password(password) {}
 
     void NetworkDriver::ensure_connection() {
+        if (WiFi.status() == WL_CONNECTED) {
+            Serial.println("Already connected to WiFi.");
+            return;
+        }
+
         Serial.println("Ensuring connection to WiFi:");
         Serial.print("SSID: ");
         Serial.println(this->ssid);
