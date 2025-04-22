@@ -98,7 +98,7 @@ namespace Drivers {
 
         JsonDocument response;
         deserializeJson(response, response_str);
-        return response["moreInfo"];
+        return response;
     }
 
     JsonDocument APIDriver::post_score(const char* table_name, const char* username, int score) {
@@ -136,7 +136,7 @@ namespace Drivers {
 
         JsonDocument response;
         deserializeJson(response, response_str);
-        return response["moreInfo"];
+        return response;
     }
 
     const char* timing_table_name = "timing";
