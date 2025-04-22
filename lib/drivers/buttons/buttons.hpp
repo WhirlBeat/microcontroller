@@ -15,7 +15,7 @@ namespace Drivers {
 
         bool is_held() const;
         bool is_clicked() const;
-        bool is_click_repeated(int repeat_rate = 100, int before_delay = 1000);
+        bool is_click_repeated(int repeat_rate = 100, int before_delay = 500);
 
     private:
         int pin;

@@ -38,6 +38,7 @@ namespace Drivers {
 
     bool ButtonDriver::is_click_repeated(int repeat_rate, int before_delay) {
         if (ticks_since_press == 0) return false;
+        if (ticks_since_press == 1) return true;
 
         if (ticks_since_press > before_delay) {
             return (ticks_since_press - before_delay) % repeat_rate == 0;
