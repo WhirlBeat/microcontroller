@@ -5,19 +5,18 @@
 
 
 namespace Engine {
-    SceneLoader::SceneLoader(Scene& initial_scene) :
-        scene(initial_scene)
+    SceneLoader::SceneLoader(Scene *initial_scene) :
+        current_scene(initial_scene)
     {}
 
     void SceneLoader::tick() {
-        const Scene& next_scene = this->scene.tick();
-
         Drivers::button_driver_left.tick();
         Drivers::button_driver_action.tick();
         Drivers::button_driver_right.tick();
 
-        if (!next_scene.blank) {
-            this->scene = next_scene;
+        Scene *next_scene = this->current_scene->tick();
+        if (next_scene) {
+            this->current_scene = next_scene;
         }
     }
 }

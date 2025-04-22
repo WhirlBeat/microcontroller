@@ -7,9 +7,9 @@
 namespace Engine {
     class SceneLoader {
     public:
-        Scene& scene;
+        Scene *current_scene;
 
-        explicit SceneLoader(Scene& initial_scene);
+        explicit SceneLoader(Scene *initial_scene);
 
         void tick();
     };
