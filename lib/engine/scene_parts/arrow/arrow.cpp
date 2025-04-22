@@ -8,11 +8,8 @@ namespace Engine {
     }
 
     void ArrowsScenePart::tick() {
-        if (rendered) return;
-
         Drivers::display_driver.print_char_at(0, this->row, CustomChars::ARROW_LEFT);
         Drivers::display_driver.print_char_at(-1, this->row, CustomChars::ARROW_RIGHT);
-        rendered = true;
     }
 
     void ArrowsScenePart::clear_without_arrows() {

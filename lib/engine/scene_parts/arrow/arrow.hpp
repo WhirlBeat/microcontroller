@@ -7,7 +7,6 @@
 namespace Engine {
     class ArrowsScenePart : public ScenePart {
     public:
-        bool rendered = false;
         int row;
 
         ArrowsScenePart(int row);
