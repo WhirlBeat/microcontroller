@@ -12,6 +12,9 @@ namespace Engine {
 
         MainMenuScene();
 
-        const Scene& tick() override;
+        Scene* tick() override;
     };
+
+
+    extern MainMenuScene main_menu_scene;
 }

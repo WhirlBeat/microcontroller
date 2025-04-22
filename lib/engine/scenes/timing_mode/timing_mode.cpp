@@ -5,7 +5,7 @@
 namespace Engine {
     TimingModePlayScene::TimingModePlayScene() {}
 
-    const Scene& TimingModePlayScene::tick() {
+    Scene* TimingModePlayScene::tick() {
         this->current_timing_sp.tick();
         if (this->current_timing_sp.is_stop_clicked) {
             int score = this->current_timing_sp.calculate_score_weighted();
@@ -27,6 +27,6 @@ namespace Engine {
             this->current_timing_sp = TimingScenePart();
         }
 
-        return blank_scene;
+        return nullptr;
     }
 }

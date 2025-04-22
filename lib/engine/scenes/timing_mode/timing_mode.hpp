@@ -13,6 +13,6 @@ namespace Engine {
 
         TimingModePlayScene();
 
-        const Scene& tick() override;
+        Scene* tick() override;
     };
 }
