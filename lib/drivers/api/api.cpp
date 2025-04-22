@@ -2,6 +2,7 @@
 
 #include <scoped_http.hpp>
 #include "../display/display.hpp"
+#include "../network/network.hpp"
 
 #include "api.hpp"
 
@@ -15,6 +16,8 @@ namespace Drivers {
 
 
     void APIDriver::ensure_connection() {
+        network_driver.ensure_connection();
+
         Serial.println("Ensuring connection to backend:");
         Serial.print("Base URL: ");
         Serial.println(this->base_url);
@@ -57,6 +60,49 @@ namespace Drivers {
         this->ensure_connection();
     }
 
+
+
+    JsonDocument APIDriver::get_table(const char* table_name, int load_count, int center_on) {
+        this->ensure_connection();
+
+        String result_url = NetworkParams::base_url + this->scores_route + "?tableName=" + table_name;
+        if (load_count > 0) {
+            result_url += "&loadCount=" + String(load_count);
+        }
+
+        if (center_on > 0) {
+            result_url += "&centerOn=" + String(center_on);
+        }
+
+        int responseCode = HTTP_CODE_CONTINUE;
+
+
+        Serial.println("Attempting to get table from URL: " + result_url);
+
+        String result_str;
+        while (true) {
+            ScopedHTTPClient scoped_http{result_url};
+            int responseCode = scoped_http.client.GET();
+
+            if (responseCode == HTTP_CODE_OK) {
+                result_str = scoped_http.client.getString();
+                break;
+            }
+
+            Serial.println("Error occurred. Status Code: " + String(responseCode));
+            delay(this->retry_after);
+        }
+
+        Serial.println("Finished.");
+        Serial.println(result_str);
+
+        JsonDocument result;
+        deserializeJson(result, result_str);
+        return result["moreInfo"];
+    }
+
+
+    const char* timing_table_name = "timing";
 
     APIDriver api_driver{};
 }
