@@ -3,7 +3,8 @@
 
 
 namespace Engine {
-    LeaderboardEntry::LeaderboardEntry(String username, int score, int placement) :
+    LeaderboardEntry::LeaderboardEntry(int id, String username, int score, int placement) :
+        id(id),
         username(username),
         score(score),
         placement(placement)
@@ -24,6 +25,13 @@ namespace Engine {
     Scene* LeaderboardScene::tick() {
         if (!this->is_entries_loaded) {
             this->load_entries();
+
+            for (int idx = 0; idx < this->actual_entry_count; idx++) {
+                if (this->entries[idx].id == this->center_on) {
+                    this->current_center_idx = idx;
+                    break;
+                }
+            }
         }
 
         if (this->state != CONFIRM_EXIT) this->is_confirm_exit_rendered = false;
@@ -58,6 +66,7 @@ namespace Engine {
             JsonObject obj = more_info[idx].as<JsonObject>();
 
             this->entries[idx] = LeaderboardEntry(
+                obj["id"].as<int>(),
                 String(obj["username"].as<const char*>()),
                 obj["score"].as<int>(),
                 obj["placement"].as<int>()

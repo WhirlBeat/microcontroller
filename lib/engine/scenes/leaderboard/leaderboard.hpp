@@ -10,11 +10,12 @@
 namespace Engine {
     class LeaderboardEntry {
     public:
+        int id;
         String username;
         int score;
         int placement;
 
-        LeaderboardEntry(String username, int score, int placement);
+        LeaderboardEntry(int id, String username, int score, int placement);
         LeaderboardEntry();
     };
 
