@@ -44,6 +44,9 @@ namespace Engine {
         this->render_lights();
     }
 
+    void SelectMenuScenePart::force_render() {
+        this->previous_select_idx = 1000;
+    }
 
     const char * SelectMenuScenePart::get_selected_str()
     {
