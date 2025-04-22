@@ -37,7 +37,7 @@ namespace Engine {
 
         if (select_idx != previous_select_idx) {
             arrows.clear_without_arrows();
-            Drivers::display_driver.print_center(0, choices[select_idx]);
+            Drivers::display_driver.print_center(this->row, choices[select_idx]);
             previous_select_idx = select_idx;
         }
 
