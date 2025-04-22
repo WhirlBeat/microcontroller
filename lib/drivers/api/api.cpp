@@ -76,31 +76,68 @@ namespace Drivers {
 
         int responseCode = HTTP_CODE_CONTINUE;
 
-
-        Serial.println("Attempting to get table from URL: " + result_url);
-
-        String result_str;
+        String response_str;
         while (true) {
-            ScopedHTTPClient scoped_http{result_url};
-            int responseCode = scoped_http.client.GET();
+            Serial.println("Attempting to get table from URL: " + result_url);
 
-            if (responseCode == HTTP_CODE_OK) {
-                result_str = scoped_http.client.getString();
+            ScopedHTTPClient scoped_http{result_url};
+            int response_code = scoped_http.client.GET();
+
+            if (response_code == HTTP_CODE_OK) {
+                response_str = scoped_http.client.getString();
                 break;
             }
 
-            Serial.println("Error occurred. Status Code: " + String(responseCode));
+            Serial.println("Error occurred. Status Code: " + String(response_code));
+            Serial.println("Response body: " + scoped_http.client.getString());
             delay(this->retry_after);
         }
 
         Serial.println("Finished.");
-        Serial.println(result_str);
+        Serial.println(response_str);
 
-        JsonDocument result;
-        deserializeJson(result, result_str);
-        return result["moreInfo"];
+        JsonDocument response;
+        deserializeJson(response, response_str);
+        return response["moreInfo"];
     }
 
+    JsonDocument APIDriver::post_score(const char* table_name, const char* username, int score) {
+        this->ensure_connection();
+        String result_url = NetworkParams::base_url + this->scores_route;
+
+        JsonDocument request;
+        request["tableName"] = table_name;
+        request["username"] = username;
+        request["score"] = score;
+        request["password"] = this->api_password;
+
+        String request_str;
+        serializeJson(request, request_str);
+
+        String response_str;
+        while (true) {
+            Serial.println("Attempting to post score to URL: " + result_url);
+            Serial.println("Request body: " + request_str);
+
+            ScopedHTTPClient scoped_http{result_url};
+            scoped_http.client.addHeader("Content-Type", "application/json");
+
+            int response_code = scoped_http.client.POST(request_str.c_str());
+
+            if (response_code == HTTP_CODE_OK) {
+                response_str = scoped_http.client.getString();
+                break;
+            }
+
+            Serial.println("Error occurred. Status Code: " + String(response_code));
+            Serial.println("Response body: " + scoped_http.client.getString());
+            delay(this->retry_after);
+        }
+
+        JsonDocument response;
+        deserializeJson(response, response_str);
+        return response["moreInfo"];
+    }
 
     const char* timing_table_name = "timing";
 

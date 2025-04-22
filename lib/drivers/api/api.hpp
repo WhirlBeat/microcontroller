@@ -29,6 +29,7 @@ namespace Drivers {
 
 
         JsonDocument get_table(const char* table_name, int load_count = -1, int center_on = -1);
+        JsonDocument post_score(const char* table_name, const char* username, int score);
     };
 
 
