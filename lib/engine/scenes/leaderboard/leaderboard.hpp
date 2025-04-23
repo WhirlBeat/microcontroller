@@ -39,7 +39,6 @@ namespace Engine {
         };
 
         SelectMenuScenePart confirm_exit_scene_part{choices, choices_count, 2};
-        bool is_confirm_exit_rendered = false;
 
 
         const char* table_name;
@@ -52,7 +51,6 @@ namespace Engine {
         bool is_entries_loaded = false;
 
         int current_center_idx = 0;
-        int previous_center_idx = 1000;
 
         LeaderboardScene(const char* table_name, int load_count, int center_on = -1);
 

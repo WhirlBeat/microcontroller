@@ -31,6 +31,7 @@ namespace Drivers {
             display_driver.print_center(0, "Connecting backend:");
             display_driver.print_center(1, this->base_url.substring(0, 20).c_str());
             display_driver.print_center(2, (String(tries) + " tries").c_str());
+            display_driver.render();
 
             ScopedHTTPClient scoped_http{NetworkParams::base_url + this->hello_route + "?password=" + this->api_password};
             int responseCode = scoped_http.client.GET();
@@ -48,12 +49,14 @@ namespace Drivers {
             }
 
             display_driver.print_center(3, String(responseCode).c_str());
+            display_driver.render();
 
             tries++;
             delay(this->retry_after);
         }
 
         display_driver.clear_all();
+        display_driver.render();
     }
 
     void APIDriver::begin() {

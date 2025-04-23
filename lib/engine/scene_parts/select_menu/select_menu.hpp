@@ -29,7 +29,6 @@ namespace Engine {
 
     private:
         int select_idx = 0;
-        int previous_select_idx = 1000;
 
         void render_lights();
     };

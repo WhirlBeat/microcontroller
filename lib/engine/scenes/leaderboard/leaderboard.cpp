@@ -34,14 +34,8 @@ namespace Engine {
             }
         }
 
-        if (this->state != CONFIRM_EXIT) this->is_confirm_exit_rendered = false;
-
         if (this->state == DISPLAY_ENTRIES) {
             this->update_display_entries_controls();
-            if (this->current_center_idx == this->previous_center_idx) {
-                return nullptr;
-            }
-            this->previous_center_idx = this->current_center_idx;
             this->render_entries(this->current_center_idx);
             return nullptr;
         }
@@ -125,13 +119,8 @@ namespace Engine {
 
 
     void LeaderboardScene::tick_confirm_exit_scene_part() {
-        if (!this->is_confirm_exit_rendered) {
-            Drivers::display_driver.clear_all();
-            Drivers::display_driver.print_center(0, "Exit leaderboard?");
-
-            this->confirm_exit_scene_part.force_render();
-            this->is_confirm_exit_rendered = true;
-        }
+        Drivers::display_driver.clear_all();
+        Drivers::display_driver.print_center(0, "Exit leaderboard?");
 
         this->confirm_exit_scene_part.tick();
 
@@ -140,7 +129,6 @@ namespace Engine {
                 this->state = EXIT;
             }
             else {
-                this->previous_center_idx = 1000;
                 this->state = DISPLAY_ENTRIES;
             }
         }
