@@ -12,6 +12,7 @@ namespace Engine {
 
         MainMenuScene();
 
+        void begin() override;
         Scene* tick() override;
     };
 

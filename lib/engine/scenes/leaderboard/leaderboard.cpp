@@ -22,18 +22,11 @@ namespace Engine {
         center_on(center_on)
     {}
 
+    void LeaderboardScene::begin() {
+        this->load_entries();
+    }
+
     Scene* LeaderboardScene::tick() {
-        if (!this->is_entries_loaded) {
-            this->load_entries();
-
-            for (int idx = 0; idx < this->actual_entry_count; idx++) {
-                if (this->entries[idx].id == this->center_on) {
-                    this->current_center_idx = idx;
-                    break;
-                }
-            }
-        }
-
         if (this->state == DISPLAY_ENTRIES) {
             this->update_display_entries_controls();
             this->render_entries(this->current_center_idx);
@@ -67,7 +60,12 @@ namespace Engine {
             );
         }
 
-        this->is_entries_loaded = true;
+        for (int idx = 0; idx < this->actual_entry_count; idx++) {
+            if (this->entries[idx].id == this->center_on) {
+                this->current_center_idx = idx;
+                break;
+            }
+        }
     }
 
     void LeaderboardScene::update_display_entries_controls() {

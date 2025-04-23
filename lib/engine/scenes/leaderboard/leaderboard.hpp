@@ -48,12 +48,12 @@ namespace Engine {
         static const int MAX_ENTRY_COUNT = 20;
         LeaderboardEntry entries[MAX_ENTRY_COUNT];
         int actual_entry_count = 0;
-        bool is_entries_loaded = false;
 
         int current_center_idx = 0;
 
         LeaderboardScene(const char* table_name, int load_count, int center_on = -1);
 
+        void begin() override;
         Scene* tick() override;
 
         void load_entries();

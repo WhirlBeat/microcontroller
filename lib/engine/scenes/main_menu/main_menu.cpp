@@ -22,6 +22,10 @@ namespace Engine {
         select_menu(choices, choices_count, 0)
     {}
 
+    void MainMenuScene::begin() {
+        this->select_menu.begin();
+    }
+
     Scene* MainMenuScene::tick() {
         select_menu.tick();
 
