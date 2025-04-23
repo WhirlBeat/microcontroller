@@ -31,6 +31,7 @@ namespace Drivers {
             display_driver.print_center(0, "Connecting to WiFi:");
             display_driver.print_center(1, ssid);
             display_driver.print_center(2, (String(tries) + " tries").c_str());
+            display_driver.render();
 
             WiFi.begin(NetworkParams::ssid, NetworkParams::password);
             while (
@@ -52,6 +53,7 @@ namespace Drivers {
             }
 
             display_driver.print_center(3, String(WiFi.status()).c_str());
+            display_driver.render();
 
             tries++;
             delay(this->retry_after);
@@ -59,6 +61,7 @@ namespace Drivers {
         };
 
         display_driver.clear_all();
+        display_driver.render();
     }
 
     void NetworkDriver::begin() {

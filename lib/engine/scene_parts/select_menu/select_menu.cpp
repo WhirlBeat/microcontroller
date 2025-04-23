@@ -35,17 +35,10 @@ namespace Engine {
             if (select_idx >= (int)choices_count) select_idx = 0;
         }
 
-        if (select_idx != previous_select_idx) {
-            arrows.clear_without_arrows();
-            Drivers::display_driver.print_center(this->row, choices[select_idx]);
-            previous_select_idx = select_idx;
-        }
+        arrows.clear_without_arrows();
+        Drivers::display_driver.print_center(this->row, choices[select_idx]);
 
         this->render_lights();
-    }
-
-    void SelectMenuScenePart::force_render() {
-        this->previous_select_idx = 1000;
     }
 
     const char * SelectMenuScenePart::get_selected_str()

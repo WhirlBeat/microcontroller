@@ -15,6 +15,9 @@ namespace Engine {
         Drivers::button_driver_right.tick();
 
         Scene *next_scene = this->current_scene->tick();
+
+        Drivers::display_driver.render();
+
         if (next_scene) {
             this->current_scene = next_scene;
         }
