@@ -7,8 +7,8 @@ namespace Engine {
     public:
         Scene();
 
-        virtual void on_enter();
+        virtual void begin();
         virtual Scene* tick();
-        virtual void on_exit();
+        virtual void end();
     };
 }

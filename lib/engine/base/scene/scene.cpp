@@ -5,11 +5,11 @@
 namespace Engine {
     Scene::Scene() {}
 
-    void Scene::on_enter() {}
+    void Scene::begin() {}
 
     Scene* Scene::tick() {
         return nullptr;
     }
 
-    void Scene::on_exit() {}
+    void Scene::end() {}
 }

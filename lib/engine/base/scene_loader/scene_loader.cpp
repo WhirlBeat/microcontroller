@@ -8,7 +8,7 @@ namespace Engine {
     SceneLoader::SceneLoader(Scene *initial_scene) :
         current_scene(initial_scene)
     {
-        this->current_scene->on_enter();
+        this->current_scene->begin();
     }
 
     void SceneLoader::tick() {
@@ -21,10 +21,10 @@ namespace Engine {
         Drivers::display_driver.render();
 
         if (next_scene) {
-            this->current_scene->on_exit();
+            this->current_scene->end();
 
             this->current_scene = next_scene;
-            this->current_scene->on_enter();
+            this->current_scene->begin();
         }
     }
 }
