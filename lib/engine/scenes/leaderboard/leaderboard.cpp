@@ -15,12 +15,13 @@ namespace Engine {
         placement(0)
     {}
 
-    LeaderboardScene::LeaderboardScene(const char* table_name, int load_count, int center_on) :
-        Scene::Scene(),
-        table_name(table_name),
-        load_count(load_count),
-        center_on(center_on)
-    {}
+    LeaderboardScene::LeaderboardScene() : Scene() {}
+
+    void LeaderboardScene::init(const char* table_name, int load_count, int center_on) {
+        this->table_name = table_name;
+        this->load_count = load_count;
+        this->center_on = center_on;
+    }
 
     void LeaderboardScene::begin() {
         this->load_entries();

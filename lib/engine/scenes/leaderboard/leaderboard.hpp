@@ -41,9 +41,9 @@ namespace Engine {
         SelectMenuScenePart confirm_exit_scene_part{choices, choices_count, 2};
 
 
-        const char* table_name;
-        int load_count;
-        int center_on;
+        const char* table_name = nullptr;
+        int load_count = 10;
+        int center_on = -1;
 
         static const int MAX_ENTRY_COUNT = 20;
         LeaderboardEntry entries[MAX_ENTRY_COUNT];
@@ -51,7 +51,9 @@ namespace Engine {
 
         int current_center_idx = 0;
 
-        LeaderboardScene(const char* table_name, int load_count, int center_on = -1);
+        LeaderboardScene();
+
+        void init(const char* table_name, int load_count, int center_on = -1);
 
         void begin() override;
         Scene* tick() override;
