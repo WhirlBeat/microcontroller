@@ -24,6 +24,7 @@ namespace Drivers {
         explicit DisplayDriver(int size_x = 20, int size_y = 4, int address = 0x27);
 
         virtual void begin() = 0;
+        virtual void render() = 0;
 
         virtual void go_to(int x, int y) = 0;
         virtual void print_message(const char* message) = 0;
@@ -44,9 +45,19 @@ namespace Drivers {
     public:
         LiquidCrystal_I2C lcd;
 
-        explicit LCDDisplayDriver(int size_x = 20, int size_y = 4, int address = 0x27);
+        static const int MAX_SIZE_X = 30;
+        static const int MAX_SIZE_Y = 10;
+
+        char current_buffer[MAX_SIZE_Y][MAX_SIZE_X];
+        char previous_buffer[MAX_SIZE_Y][MAX_SIZE_X];
+
+        int cursor_x = 0;
+        int cursor_y = 0;
+
+        LCDDisplayDriver(int size_x = 20, int size_y = 4, int address = 0x27);
 
         void begin() override;
+        void render() override;
 
         void go_to(int x, int y) override;
         void print_message(const char* message) override;
@@ -68,6 +79,7 @@ namespace Drivers {
         SerialDisplayDriver();
 
         void begin() override;
+        void render() override;
 
         void go_to(int x, int y) override;
         void print_message(const char* message) override;

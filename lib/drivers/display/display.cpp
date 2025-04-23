@@ -43,7 +43,14 @@ namespace Drivers {
 
     LCDDisplayDriver::LCDDisplayDriver(int size_x, int size_y, int address) :
         DisplayDriver(size_x, size_y), lcd(address, size_x, size_y)
-    {}
+    {
+        for (int row_idx = 0; row_idx < MAX_SIZE_Y; row_idx++) {
+            for (int col_idx = 0; col_idx < MAX_SIZE_X; col_idx++) {
+                current_buffer[row_idx][col_idx] = ' ';
+                current_buffer[row_idx][col_idx] = ' ';
+            }
+        }
+    }
 
 
     void LCDDisplayDriver::begin() {
@@ -54,19 +61,64 @@ namespace Drivers {
         lcd.createChar(CustomChars::ARROW_RIGHT, CustomChars::arrow_right);
     }
 
-    void LCDDisplayDriver::go_to(int x, int y) {
-        int final_x = x >= 0 ? x : size_x + x;
-        int final_y = y >= 0 ? y : size_y + y;
+    void LCDDisplayDriver::render() {
+        for (int row = 0; row < this->size_y; row++) {
+            int col = 0;
+            while (true) {
+                if (col >= this->size_x) break;
 
-        lcd.setCursor(final_x, final_y);
+                if (current_buffer[row][col] == previous_buffer[row][col]) {
+                    col++;
+                    continue;
+                };
+
+                int col_run_start = col;
+                int col_run_end = col_run_start + 1;
+                while (true) {
+                    if (col_run_end >= this->size_x) break;
+                    if (current_buffer[row][col_run_end] != previous_buffer[row][col_run_end]) {
+                        col_run_end++;
+                    } else {
+                        break;
+                    }
+                }
+
+                this->lcd.setCursor(col_run_start, row);
+                for (int col_write = col_run_start; col_write < col_run_end; col_write++) {
+                    lcd.write(current_buffer[row][col_write]);
+                }
+                col = col_run_end;
+            }
+        }
+
+        for (int row = 0; row < this->size_y; row++) {
+            for (int col = 0; col < this->size_x; col++) {
+                previous_buffer[row][col] = current_buffer[row][col];
+            }
+        }
+    }
+
+    void LCDDisplayDriver::go_to(int x, int y) {
+        this->cursor_x = x >= 0 ? x % this->size_x : this->size_x + x;
+        this->cursor_y = y >= 0 ? y % this->size_y : this->size_y + y;
     }
 
     void LCDDisplayDriver::print_message(const char* message) {
-        lcd.print(message);
+        int print_length = strlen(message);
+        if (print_length > this->size_x) {
+            print_length = this->size_x;
+        }
+
+        for (int i = 0; i < print_length; i++) {
+            current_buffer[cursor_y][cursor_x + i] = message[i];
+        }
+
+        go_to(this->cursor_x + print_length, this->cursor_y);
     }
 
     void LCDDisplayDriver::print_custom_char(int char_id) {
-        lcd.write(char_id);
+        current_buffer[cursor_y][cursor_x] = char_id;
+        go_to(this->cursor_x + 1, this->cursor_y);
     }
 
 
@@ -77,7 +129,7 @@ namespace Drivers {
 
     void LCDDisplayDriver::print_char_at(int x, int y, const int char_id) {
         go_to(x, y);
-        lcd.write(char_id);
+        print_custom_char(char_id);
     }
 
     void LCDDisplayDriver::print_center(int y, const char* message) {
@@ -86,7 +138,11 @@ namespace Drivers {
     }
 
     void LCDDisplayDriver::clear_all() {
-        lcd.clear();
+        for (int row = 0; row < this->size_y; row++) {
+            for (int col = 0; col < this->size_x; col++) {
+                current_buffer[row][col] = ' ';
+            }
+        }
     }
 
     void LCDDisplayDriver::clear_row(int y) {
@@ -108,6 +164,8 @@ namespace Drivers {
     void SerialDisplayDriver::begin() {
         Serial.println("Started display");
     }
+
+    void SerialDisplayDriver::render() {};
 
     void SerialDisplayDriver::go_to(int x, int y) {
         Serial.print("-- go to");
