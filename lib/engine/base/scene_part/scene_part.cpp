@@ -4,5 +4,6 @@
 
 namespace Engine {
     ScenePart::ScenePart() {}
-    void ScenePart::tick() {};
+    void ScenePart::begin() {}
+    void ScenePart::tick() {}
 }

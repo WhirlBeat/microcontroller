@@ -7,6 +7,7 @@ namespace Engine {
     public:
         ScenePart();
 
+        virtual void begin();
         virtual void tick();
     };
 }
