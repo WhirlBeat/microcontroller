@@ -21,14 +21,14 @@ namespace Engine {
 
 
     void CharSelectScenePart::tick() {
-        if (Drivers::button_driver_left.is_clicked()) {
+        if (Drivers::button_driver_left.is_click_repeated(50, 500)) {
             selected_idx--;
             if (selected_idx < 0) {
                 selected_idx = CHAR_SELECT_CHOICES_SIZE - 1;
             }
         }
 
-        if (Drivers::button_driver_right.is_clicked()) {
+        if (Drivers::button_driver_right.is_click_repeated(50, 500)) {
             selected_idx++;
             if (selected_idx >= CHAR_SELECT_CHOICES_SIZE) {
                 selected_idx = 0;
