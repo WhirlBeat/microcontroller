@@ -11,7 +11,10 @@ namespace Engine {
 
         ArrowsScenePart(int row);
 
+        void begin() override;
         void tick() override;
+
+        void render();
 
         void clear_without_arrows();
     };

@@ -15,6 +15,11 @@ namespace Engine {
     }
 
 
+    void CharSelectScenePart::begin() {
+        this->render();
+    }
+
+
     void CharSelectScenePart::tick() {
         if (Drivers::button_driver_left.is_clicked()) {
             selected_idx--;
@@ -30,6 +35,11 @@ namespace Engine {
             }
         }
 
+        this->render();
+    }
+
+
+    void CharSelectScenePart::render() {
         char c_str[2];
         c_str[0] = CHAR_SELECT_CHOICES[selected_idx];
         c_str[1] = '\0';

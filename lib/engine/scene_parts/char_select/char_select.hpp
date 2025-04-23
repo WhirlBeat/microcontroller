@@ -22,6 +22,9 @@ namespace Engine {
 
         CharSelectScenePart(int selected_idx = 0, int x = 0, int y = 0);
 
+        void begin() override;
         void tick() override;
+
+        void render();
     };
 }

@@ -18,9 +18,12 @@ namespace Engine {
 
         SelectMenuScenePart(const char* const choices[], const size_t choices_count, int row);
 
+        void begin() override;
         void tick() override;
 
-        const char * get_selected_str();
+        void render();
+
+        const char* get_selected_str();
         int get_selected_idx();
 
 

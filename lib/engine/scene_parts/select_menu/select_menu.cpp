@@ -22,6 +22,12 @@ namespace Engine {
         arrows(row)
     {}
 
+    void SelectMenuScenePart::begin() {
+        this->arrows.begin();
+        this->render();
+        this->render_lights();
+    }
+
     void SelectMenuScenePart::tick() {
         this->arrows.tick();
 
@@ -35,10 +41,15 @@ namespace Engine {
             if (select_idx >= (int)choices_count) select_idx = 0;
         }
 
-        arrows.clear_without_arrows();
-        Drivers::display_driver.print_center(this->row, choices[select_idx]);
-
+        this->render();
         this->render_lights();
+    }
+
+
+    void SelectMenuScenePart::render() {
+        this->arrows.clear_without_arrows();
+        this->arrows.render();
+        Drivers::display_driver.print_center(this->row, choices[select_idx]);
     }
 
     const char * SelectMenuScenePart::get_selected_str()
