@@ -15,7 +15,7 @@ namespace Engine {
         enum State {
             SETTING_USERNAME,
             CONFIRM,
-            EXIT
+            SUBMIT
         };
 
 
@@ -30,7 +30,9 @@ namespace Engine {
 
         size_t selected_char_idx = 0;
 
-        const int row = 1;
+        static const size_t confirm_choices_count = 2;
+        static const char* confirm_choices[confirm_choices_count];
+        SelectMenuScenePart confirm_part{confirm_choices, confirm_choices_count, 3};
 
         ScoreSubmitScene();
         void init(const char* table_name, int score);
@@ -44,5 +46,6 @@ namespace Engine {
 
     private:
         int get_char_col(int idx);
+        void clear_except_username();
     };
 }
