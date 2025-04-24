@@ -20,6 +20,8 @@ namespace Engine {
         virtual const char* get_shorthand() = 0;
         virtual const float get_multiplier() = 0;
 
+        virtual void init();
+
         virtual void tick();
         virtual TimingSettings modify_settings(TimingSettings settings);
     };

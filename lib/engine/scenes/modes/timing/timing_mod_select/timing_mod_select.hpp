@@ -17,6 +17,7 @@ namespace Engine {
 
         static const int ROW_SELECT_MENU = 0;
         static const int ROW_DESC = 1;
+        static const int ROW_MULTIPLIER = 2;
         static const int ROW_ENABLE_STATUS = 3;
 
         TimingModeModSelectScene();
@@ -24,5 +25,9 @@ namespace Engine {
         void init();
 
         void tick() override;
+
+        void get_selected_mods(TimingMod** out_mods, size_t* out_size);
+
+        float get_total_multiplier();
     };
 }

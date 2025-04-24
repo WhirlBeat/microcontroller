@@ -48,4 +48,30 @@ namespace Engine {
         );
         Drivers::display_driver.print_char_at(0, this->ROW_ENABLE_STATUS, CustomChars::ACTION);
     }
+
+    void TimingModeModSelectScene::get_selected_mods(TimingMod** out_mods, size_t* out_size) {
+        int current_idx = 0;
+        for (int idx = 0; idx < TIMING_MOD_COUNT; idx++) {
+            if (this->mod_select_mask[idx]) {
+                out_mods[current_idx] = this->mods[idx];
+                current_idx++;
+
+                Serial.println(this->mods[idx]->get_name());
+            }
+        }
+        *out_size = current_idx;
+    }
+
+    float TimingModeModSelectScene::get_total_multiplier() {
+        TimingMod* selected_mods[TIMING_MOD_COUNT];
+        size_t selected_mods_count = 0;
+        this->get_selected_mods(selected_mods, &selected_mods_count);
+
+        float multiplier = 1.0f;
+        for (int idx = 0; idx < selected_mods_count; idx++) {
+            multiplier *= selected_mods[idx]->get_multiplier();
+        }
+
+        return multiplier;
+    }
 }

@@ -7,7 +7,7 @@
 
 
 
-Engine::LeaderboardScene scene{};
+Engine::TimingModeSetupScene scene{};
 
 Tools::TPS tps;
 
@@ -32,7 +32,7 @@ void setup() {
         while (true) { delay(10000); }
     }
 
-    scene.init(Drivers::timing_table_name, 10);
+    scene.init();
     Engine::scene_loader.switch_scene(&scene);
 }
 
