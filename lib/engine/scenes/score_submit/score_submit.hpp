@@ -4,14 +4,26 @@
 
 #include "../../scene_parts/scene_parts.hpp"
 #include "../../base/base.hpp"
+
+#include "../leaderboard/leaderboard.hpp"
 #include "../main_menu/main_menu.hpp"
 
 
 namespace Engine {
     class ScoreSubmitScene : public Scene {
     public:
-        const char* table_name;
-        int score;
+        enum State {
+            SETTING_USERNAME,
+            CONFIRM,
+            EXIT
+        };
+
+
+        State state = SETTING_USERNAME;
+        LeaderboardScene leaderboard_scene{};
+
+        const char* table_name = nullptr;
+        int score = 0;
 
         static const int USERNAME_LENGTH = 5;
         CharSelectScenePart char_select_parts[USERNAME_LENGTH];
@@ -20,10 +32,15 @@ namespace Engine {
 
         const int row = 1;
 
-        ScoreSubmitScene(const char* table_name, int score);
+        ScoreSubmitScene();
+        void init(const char* table_name, int score);
 
         void begin() override;
         Scene* tick() override;
+
+
+        void tick_state_setting_username();
+        void tick_confirm();
 
     private:
         int get_char_col(int idx);
