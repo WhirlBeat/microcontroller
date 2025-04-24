@@ -26,5 +26,7 @@ namespace Engine {
         void tick() override;
 
         void render();
+
+        char get_selected_char();
     };
 }

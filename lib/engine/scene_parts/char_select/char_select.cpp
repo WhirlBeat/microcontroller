@@ -41,8 +41,12 @@ namespace Engine {
 
     void CharSelectScenePart::render() {
         char c_str[2];
-        c_str[0] = CHAR_SELECT_CHOICES[selected_idx];
+        c_str[0] = this->get_selected_char();
         c_str[1] = '\0';
         Drivers::display_driver.print_at(x, y, c_str);
     }
-}
+
+    char CharSelectScenePart::get_selected_char() {
+        return CHAR_SELECT_CHOICES[selected_idx];
+    }
+}  // namespace Engine
