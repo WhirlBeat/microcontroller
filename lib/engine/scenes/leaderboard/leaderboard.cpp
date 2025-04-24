@@ -34,10 +34,10 @@ namespace Engine {
             this->update_display_entries_controls();
             this->render_entries(this->current_center_idx);
         }
-        if (this->state == CONFIRM_EXIT) {
+        else if (this->state == CONFIRM_EXIT) {
             this->tick_confirm_exit_scene_part();
         }
-        if (this->state == EXIT) {
+        else if (this->state == EXIT) {
             Drivers::display_driver.clear_all();
             scene_loader.go_back_to_scene(SceneIds::MAIN_MENU);
         }
