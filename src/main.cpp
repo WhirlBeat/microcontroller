@@ -7,7 +7,7 @@
 
 
 
-Engine::ScoreSubmitScene scene{};
+Engine::MainMenuScene scene{};
 
 Engine::SceneLoader scene_loader{&scene};
 
@@ -22,9 +22,6 @@ void setup() {
     while (!Serial) delay(100);
 
     Drivers::api_driver.begin();
-
-
-    scene.init(Drivers::timing_table_name, 17532);
 }
 
 void loop() {

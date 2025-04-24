@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../base/base.hpp"
-#include "../../scene_parts/scene_parts.hpp"
+#include <base/base.hpp>
+#include <scene_parts/scene_parts.hpp>
 
 
 
