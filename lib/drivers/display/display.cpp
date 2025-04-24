@@ -34,6 +34,18 @@ namespace CustomChars {
     };
     const int ARROW_RIGHT = 1;
 
+    byte action[] = {
+        B00000,
+        B00100,
+        B01110,
+        B11111,
+        B11111,
+        B01110,
+        B00100,
+        B00000
+    };
+    const int ACTION = 2;
+
     byte arrow_up[] = {
         B00000,
         B00000,
@@ -44,7 +56,7 @@ namespace CustomChars {
         B00000,
         B00000
     };
-    const int ARROW_UP = 2;
+    const int ARROW_UP = 3;
 
     byte arrow_down[] = {
         B00000,
@@ -56,7 +68,7 @@ namespace CustomChars {
         B00000,
         B00000
     };
-    const int ARROW_DOWN = 3;
+    const int ARROW_DOWN = 4;
 
     byte arrow_up_down[] = {
         B00100,
@@ -68,7 +80,7 @@ namespace CustomChars {
         B01110,
         B00100
     };
-    const int ARROW_UP_DOWN = 4;
+    const int ARROW_UP_DOWN = 5;
 }
 
 
@@ -95,6 +107,7 @@ namespace Drivers {
 
         lcd.createChar(CustomChars::ARROW_LEFT, CustomChars::arrow_left);
         lcd.createChar(CustomChars::ARROW_RIGHT, CustomChars::arrow_right);
+        lcd.createChar(CustomChars::ACTION, CustomChars::action);
         lcd.createChar(CustomChars::ARROW_UP, CustomChars::arrow_up);
         lcd.createChar(CustomChars::ARROW_DOWN, CustomChars::arrow_down);
         lcd.createChar(CustomChars::ARROW_UP_DOWN, CustomChars::arrow_up_down);

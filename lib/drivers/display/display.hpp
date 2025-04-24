@@ -13,6 +13,9 @@ namespace CustomChars {
     extern byte arrow_right[];
     extern const int ARROW_RIGHT;
 
+    extern byte action[];
+    extern const int ACTION;
+
     extern byte arrow_up[];
     extern const int ARROW_UP;
 
