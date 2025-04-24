@@ -108,10 +108,8 @@ namespace Engine {
                 Drivers::display_driver.print_at(1, current_row, ">");
             }
 
-            Drivers::display_driver.print_at(
-                2, current_row,
-                (String("#") + entry.placement + " " + entry.username + " " + entry.score).c_str()
-            );
+            String placement_str = String("#") + entry.placement + " " + entry.username + " " + entry.score;
+            Drivers::display_driver.print_at(2, current_row, placement_str.c_str());
         }
     }
 

@@ -30,25 +30,28 @@ namespace Drivers {
             display_driver.clear_all();
             display_driver.print_center(0, "Connecting backend:");
             display_driver.print_center(1, this->base_url.substring(0, 20).c_str());
-            display_driver.print_center(2, (String(tries) + " tries").c_str());
+
+            String tries_str = String(tries) + " tries";
+            display_driver.print_center(2, tries_str.c_str());
             display_driver.render();
 
             ScopedHTTPClient scoped_http{NetworkParams::base_url + this->hello_route + "?password=" + this->api_password};
-            int responseCode = scoped_http.client.GET();
+            int response_code = scoped_http.client.GET();
 
-            if (responseCode == HTTP_CODE_OK) {
+            if (response_code == HTTP_CODE_OK) {
                 Serial.println("Connected.");
                 break;
             }
 
-            if (responseCode == HTTP_CODE_FORBIDDEN) {
+            if (response_code == HTTP_CODE_FORBIDDEN) {
                 Serial.println("Forbidden. Wrong API password.");
             } else {
                 Serial.print("Unknown error occurred. Status Code: ");
-                Serial.println(responseCode);
+                Serial.println(response_code);
             }
 
-            display_driver.print_center(3, String(responseCode).c_str());
+            String response_code_str = String(response_code);
+            display_driver.print_center(3, response_code_str.c_str());
             display_driver.render();
 
             tries++;

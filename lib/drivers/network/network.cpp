@@ -30,7 +30,8 @@ namespace Drivers {
             display_driver.clear_all();
             display_driver.print_center(0, "Connecting to WiFi:");
             display_driver.print_center(1, ssid);
-            display_driver.print_center(2, (String(tries) + " tries").c_str());
+            String tries_str = String(tries) + " tries";
+            display_driver.print_center(2, tries_str.c_str());
             display_driver.render();
 
             WiFi.begin(NetworkParams::ssid, NetworkParams::password);
@@ -52,7 +53,8 @@ namespace Drivers {
                 break;
             }
 
-            display_driver.print_center(3, String(WiFi.status()).c_str());
+            String wifi_status_str = String(WiFi.status());
+            display_driver.print_center(3, wifi_status_str.c_str());
             display_driver.render();
 
             tries++;
