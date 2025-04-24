@@ -61,17 +61,4 @@ namespace Engine {
         }
         *out_size = current_idx;
     }
-
-    float TimingModeModSelectScene::get_total_multiplier() {
-        TimingMod* selected_mods[TIMING_MOD_COUNT];
-        size_t selected_mods_count = 0;
-        this->get_selected_mods(selected_mods, &selected_mods_count);
-
-        float multiplier = 1.0f;
-        for (int idx = 0; idx < selected_mods_count; idx++) {
-            multiplier *= selected_mods[idx]->get_multiplier();
-        }
-
-        return multiplier;
-    }
 }

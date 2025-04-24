@@ -27,7 +27,5 @@ namespace Engine {
         void tick() override;
 
         void get_selected_mods(TimingMod** out_mods, size_t* out_size);
-
-        float get_total_multiplier();
     };
 }

@@ -42,7 +42,10 @@ namespace Engine {
         Drivers::display_driver.print_center(this->ROW_SELECTED_MODS, selected_mods_shorthand_str.c_str());
 
 
-        String multiplier_str = String("Multiplier: ") + String(this->mod_select_scene.get_total_multiplier(), 2) + "x";
+        String multiplier_str =
+            String("Multiplier: ") +
+            String(get_timing_mod_total_multiplier(selected_mods, selected_mods_count), 2) +
+            "x";
         Drivers::display_driver.print_center(this->ROW_MULTIPLIER, multiplier_str.c_str());
 
         this->select_menu.tick();
