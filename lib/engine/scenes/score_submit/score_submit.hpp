@@ -25,9 +25,9 @@ namespace Engine {
         const char* table_name = nullptr;
         int score = 0;
 
-        static const int USERNAME_LENGTH = 5;
+        static const int USERNAME_LENGTH = 3;
         CharSelectScenePart char_select_parts[USERNAME_LENGTH];
-
+        
         size_t selected_char_idx = 0;
 
         static const size_t confirm_choices_count = 2;
@@ -43,6 +43,9 @@ namespace Engine {
 
         void tick_state_setting_username();
         void tick_confirm();
+
+        String get_username();
+        void submit_score();
 
     private:
         int get_char_col(int idx);

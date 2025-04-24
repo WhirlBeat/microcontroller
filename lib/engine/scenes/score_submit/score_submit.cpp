@@ -29,7 +29,8 @@ namespace Engine {
         } else if (this->state == CONFIRM) {
             this->tick_confirm();
         } else if (this->state == SUBMIT) {
-            this->leaderboard_scene.init(this->table_name, 10);
+            this->submit_score();
+
             return &this->leaderboard_scene;
         }
         return nullptr;
@@ -73,6 +74,24 @@ namespace Engine {
                 return;
             }
         }
+    }
+
+    String ScoreSubmitScene::get_username() {
+        String result = "";
+        for (int i = 0; i < this->USERNAME_LENGTH; i++) {
+            result += this->char_select_parts[i].get_selected_char();
+        }
+
+        return result;
+    }
+
+    void Engine::ScoreSubmitScene::submit_score() {
+        String username = this->get_username();
+
+        JsonDocument response = Drivers::api_driver.post_score(this->table_name, username.c_str(), this->score);
+        int id = response["moreInfo"]["id"].as<int>();
+
+        this->leaderboard_scene.init(this->table_name, 10, id);
     }
 
     int ScoreSubmitScene::get_char_col(int idx) {
