@@ -3,7 +3,7 @@
 
 
 namespace Engine {
-    const char* ScoreSubmitScene::confirm_choices[confirm_choices_count] = {"No, edit score", "Yes, submit score"};
+    const char* ScoreSubmitScene::confirm_choices[confirm_choices_count] = {"No, edit name", "Yes, submit score"};
 
     ScoreSubmitScene::ScoreSubmitScene() : Scene::Scene() {
         for (int i = 0; i < this->USERNAME_LENGTH; i++) {
@@ -23,7 +23,7 @@ namespace Engine {
     }
 
     Scene* ScoreSubmitScene::tick() {
-        this->clear_except_username();
+        Drivers::display_driver.clear_all();
         if (this->state == SETTING_USERNAME) {
             this->tick_state_setting_username();
         } else if (this->state == CONFIRM) {
@@ -37,12 +37,22 @@ namespace Engine {
     }
 
     void ScoreSubmitScene::tick_state_setting_username() {
-        Drivers::display_driver.print_center(0, "Enter name:");
+        Drivers::display_driver.print_center(0, "New score!");
 
-        String score_str = String(this->score);
+        String score_str = String("---- ") + this->score + " ----";
         Drivers::display_driver.print_center(1, score_str.c_str());
 
+
+        Drivers::display_driver.print_at(0, 2, "Enter name:");
+
+        for (int i = 0; i < this->USERNAME_LENGTH; i++) {
+            this->char_select_parts[i].render();
+        }
         this->char_select_parts[this->selected_char_idx].tick();
+
+        Drivers::display_driver.print_char_at(this->get_char_col(0) - 2, 2, CustomChars::ARROW_UP_DOWN);
+        Drivers::display_driver.print_char_at(this->get_char_col(this->USERNAME_LENGTH - 1) + 2, 2, CustomChars::ARROW_UP_DOWN);
+
 
         if (Drivers::button_driver_action.is_clicked()) {
             this->selected_char_idx++;
@@ -60,7 +70,7 @@ namespace Engine {
     void ScoreSubmitScene::tick_confirm() {
         Drivers::display_driver.print_center(0, "Is this correct?");
 
-        String score_str = String(this->score);
+        String score_str = String(this->score) + " -- by " + this->get_username();
         Drivers::display_driver.print_center(1, score_str.c_str());
 
         this->confirm_part.tick();
@@ -95,12 +105,6 @@ namespace Engine {
     }
 
     int ScoreSubmitScene::get_char_col(int idx) {
-        return ((Drivers::display_driver.size_x - this->USERNAME_LENGTH) / 2) + idx;
-    }
-
-    void ScoreSubmitScene::clear_except_username() {
-        Drivers::display_driver.clear_row(0);
-        Drivers::display_driver.clear_row(1);
-        Drivers::display_driver.clear_row(3);
+        return Drivers::display_driver.size_x - this->USERNAME_LENGTH - 2 + idx;
     }
 }  // namespace Engine

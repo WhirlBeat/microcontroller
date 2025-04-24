@@ -49,6 +49,5 @@ namespace Engine {
 
     private:
         int get_char_col(int idx);
-        void clear_except_username();
     };
 }
