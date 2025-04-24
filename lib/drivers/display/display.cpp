@@ -11,10 +11,10 @@ void fill_spaces(int size, char* buffer) {
 
 namespace CustomChars {
     byte arrow_left[] = {
-        B11111,
         B00001,
         B00011,
         B00111,
+        B01111,
         B01111,
         B00111,
         B00011,
@@ -27,12 +27,48 @@ namespace CustomChars {
         B11000,
         B11100,
         B11110,
+        B11110,
         B11100,
         B11000,
-        B10000,
-        B11111
+        B10000
     };
     const int ARROW_RIGHT = 1;
+
+    byte arrow_up[] = {
+        B00000,
+        B00000,
+        B00100,
+        B01110,
+        B11111,
+        B00000,
+        B00000,
+        B00000
+    };
+    const int ARROW_UP = 2;
+
+    byte arrow_down[] = {
+        B00000,
+        B00000,
+        B00000,
+        B11111,
+        B01110,
+        B00100,
+        B00000,
+        B00000
+    };
+    const int ARROW_DOWN = 3;
+
+    byte arrow_up_down[] = {
+        B00100,
+        B01110,
+        B11111,
+        B00000,
+        B00000,
+        B11111,
+        B01110,
+        B00100
+    };
+    const int ARROW_UP_DOWN = 4;
 }
 
 
@@ -59,6 +95,9 @@ namespace Drivers {
 
         lcd.createChar(CustomChars::ARROW_LEFT, CustomChars::arrow_left);
         lcd.createChar(CustomChars::ARROW_RIGHT, CustomChars::arrow_right);
+        lcd.createChar(CustomChars::ARROW_UP, CustomChars::arrow_up);
+        lcd.createChar(CustomChars::ARROW_DOWN, CustomChars::arrow_down);
+        lcd.createChar(CustomChars::ARROW_UP_DOWN, CustomChars::arrow_up_down);
     }
 
     void LCDDisplayDriver::render() {

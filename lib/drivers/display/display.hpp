@@ -12,6 +12,15 @@ namespace CustomChars {
 
     extern byte arrow_right[];
     extern const int ARROW_RIGHT;
+
+    extern byte arrow_up[];
+    extern const int ARROW_UP;
+
+    extern byte arrow_down[];
+    extern const int ARROW_DOWN;
+
+    extern byte arrow_up_down[];
+    extern const int ARROW_UP_DOWN;
 }
 
 namespace Drivers {
