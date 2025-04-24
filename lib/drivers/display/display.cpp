@@ -104,6 +104,9 @@ namespace Drivers {
     }
 
     void LCDDisplayDriver::print_message(const char* message) {
+        assert(message != nullptr);
+        assert(strlen(message) <= this->size_x);
+
         int print_length = strlen(message);
         if (print_length > this->size_x) {
             print_length = this->size_x;

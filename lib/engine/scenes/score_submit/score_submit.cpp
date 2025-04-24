@@ -29,7 +29,7 @@ namespace Engine {
         } else if (this->state == CONFIRM) {
             this->tick_confirm();
         } else if (this->state == SUBMIT) {
-            this->leaderboard_scene.init(this->table_name, this->score);
+            this->leaderboard_scene.init(this->table_name, 10);
             return &this->leaderboard_scene;
         }
         return nullptr;
@@ -37,7 +37,9 @@ namespace Engine {
 
     void ScoreSubmitScene::tick_state_setting_username() {
         Drivers::display_driver.print_center(0, "Enter name:");
-        Drivers::display_driver.print_center(1, String(this->score).c_str());
+
+        String score_str = String(this->score);
+        Drivers::display_driver.print_center(1, score_str.c_str());
 
         this->char_select_parts[this->selected_char_idx].tick();
 
@@ -56,7 +58,9 @@ namespace Engine {
 
     void ScoreSubmitScene::tick_confirm() {
         Drivers::display_driver.print_center(0, "Is this correct?");
-        Drivers::display_driver.print_center(1, String(this->score).c_str());
+
+        String score_str = String(this->score);
+        Drivers::display_driver.print_center(1, score_str.c_str());
 
         this->confirm_part.tick();
 
