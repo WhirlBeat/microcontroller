@@ -5,6 +5,10 @@
 namespace Engine {
     TimingModeSetupScene::TimingModeSetupScene() {}
 
+    const char* const TimingModeSetupScene::get_id() {
+        return "timing_setup";
+    }
+
     void TimingModeSetupScene::init() {
         this->mod_select_scene.init();
         this->select_menu.init(this->select_menu_choices, SELECT_MENU_CHOICES, this->ROW_SELECT_MENU);
@@ -26,7 +30,7 @@ namespace Engine {
                 selected_mods_shorthands[idx] = String(selected_mods[idx]->get_shorthand());
             }
 
-            String selected_mods_shorthand_str = String();
+            selected_mods_shorthand_str = String();
             for (int idx = 0; idx < selected_mods_count; idx++) {
                 selected_mods_shorthand_str += (String("+") + selected_mods_shorthands[idx]);
                 if (idx != selected_mods_count - 1) {
@@ -42,5 +46,16 @@ namespace Engine {
         Drivers::display_driver.print_center(this->ROW_MULTIPLIER, multiplier_str.c_str());
 
         this->select_menu.tick();
+
+
+        int selected_idx = this->select_menu.get_selected_idx();
+        if (Drivers::button_driver_action.is_clicked()) {
+            if (selected_idx == 0) {
+                this->play_scene.init(selected_mods, selected_mods_count);
+                scene_loader.switch_scene(&this->play_scene);
+            } else if (selected_idx == 1) {
+                scene_loader.switch_scene(&this->mod_select_scene);
+            }
+        }
     }
 }

@@ -5,6 +5,17 @@
 namespace Engine {
     TimingModePlayScene::TimingModePlayScene() {}
 
+    void TimingModePlayScene::init(TimingMod** selected_mods, size_t selected_mods_count) {
+        TimingSettings settings{};
+
+        for (int idx = 0; idx < selected_mods_count; idx++) {
+            settings = selected_mods[idx]->modify_settings(settings);
+        }
+
+        this->current_timing_sp.init(settings);
+        this->current_timing_sp.begin();
+    }
+
     void TimingModePlayScene::tick() {
         this->current_timing_sp.tick();
         if (this->current_timing_sp.is_stop_clicked) {

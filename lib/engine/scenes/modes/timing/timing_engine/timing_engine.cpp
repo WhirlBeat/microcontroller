@@ -38,7 +38,6 @@ namespace Engine {
         const size_t next_on_led_idx = this->get_shown_led_idx();
 
         Drivers::lights_driver.led_array[next_on_led_idx] = led_color;
-        Drivers::lights_driver.show();
 
         if (Drivers::button_driver_action.is_clicked()) {
             this->on_trigger_stop();
@@ -84,8 +83,6 @@ namespace Engine {
                 Drivers::lights_driver.led_array[this->goal_led_idx] = CRGB::White;
             }
         }
-
-        Drivers::lights_driver.show();
     }
 
     void TimingEngineScenePart::on_trigger_stop() {

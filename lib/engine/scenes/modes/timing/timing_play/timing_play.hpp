@@ -13,6 +13,8 @@ namespace Engine {
 
         TimingModePlayScene();
 
+        void init(TimingMod** selected_mods, size_t selected_mods_count);
+
         void tick() override;
     };
 }

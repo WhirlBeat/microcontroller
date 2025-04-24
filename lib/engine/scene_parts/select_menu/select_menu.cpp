@@ -83,7 +83,5 @@ namespace Engine {
                 );
             }
         }
-
-        Drivers::lights_driver.show();
     }
 }

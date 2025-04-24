@@ -24,6 +24,8 @@ namespace Engine {
         void switch_scene(Scene *scene);
         void go_back();
         void go_back_to_scene(const char* scene_id);
+
+        void prepare_next_scene();
     };
 
 

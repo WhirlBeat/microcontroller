@@ -28,11 +28,13 @@ namespace Engine {
             Drivers::display_driver.clear_row(this->ROW_ENABLE_STATUS);
 
             Drivers::display_driver.print_center(this->ROW_DESC, "Confirm selection.");
+
+            if (Drivers::button_driver_action.is_clicked()) {
+                scene_loader.go_back();
+            }
             return;
         }
 
-        Serial.println(selected_idx);
-        Serial.println(this->mods[selected_idx]->get_description());
         const char* description = this->mods[selected_idx]->get_description();
         Drivers::display_driver.clear_row(this->ROW_DESC);
         Drivers::display_driver.print_center(this->ROW_DESC, description);
@@ -55,8 +57,6 @@ namespace Engine {
             if (this->mod_select_mask[idx]) {
                 out_mods[current_idx] = this->mods[idx];
                 current_idx++;
-
-                Serial.println(this->mods[idx]->get_name());
             }
         }
         *out_size = current_idx;
