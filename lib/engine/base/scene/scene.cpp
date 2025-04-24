@@ -5,11 +5,13 @@
 namespace Engine {
     Scene::Scene() {}
 
+    const char* const Scene::get_id() {
+        return "";
+    }
+
     void Scene::begin() {}
 
-    Scene* Scene::tick() {
-        return nullptr;
-    }
+    void Scene::tick() {}
 
     void Scene::end() {}
 }

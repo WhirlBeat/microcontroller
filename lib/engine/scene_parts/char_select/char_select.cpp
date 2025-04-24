@@ -5,10 +5,13 @@
 
 
 namespace Engine {
-    CharSelectScenePart::CharSelectScenePart(int selected_idx, int x, int y) :
-        selected_idx(selected_idx),
-        x(x), y(y)
-    {
+    CharSelectScenePart::CharSelectScenePart() {}
+
+    void CharSelectScenePart::init(int selected_idx, int x, int y) {
+        this->selected_idx = selected_idx;
+        this->x = x;
+        this->y = y;
+
         if (selected_idx >= CHAR_SELECT_CHOICES_SIZE) {
             selected_idx = 0;
         }

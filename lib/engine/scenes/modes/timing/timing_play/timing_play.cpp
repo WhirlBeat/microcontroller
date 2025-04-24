@@ -5,7 +5,7 @@
 namespace Engine {
     TimingModePlayScene::TimingModePlayScene() {}
 
-    Scene* TimingModePlayScene::tick() {
+    void TimingModePlayScene::tick() {
         this->current_timing_sp.tick();
         if (this->current_timing_sp.is_stop_clicked) {
             int score = this->current_timing_sp.calculate_score_weighted();
@@ -14,19 +14,15 @@ namespace Engine {
 
             Drivers::display_driver.clear_all();
 
-            char score_str[10];
-            itoa(score, score_str, 10);
-            Drivers::display_driver.print_center(0, score_str);
+            String score_str = String(score);
+            Drivers::display_driver.print_center(0, score_str.c_str());
 
-            char total_score_str[30];
-            itoa(this->total_score, total_score_str, 10);
-            Drivers::display_driver.print_center(1, total_score_str);
+            String total_score_str = String(this->total_score);
+            Drivers::display_driver.print_center(1, total_score_str.c_str());
         }
 
         if (this->current_timing_sp.is_finished) {
-            this->current_timing_sp = TimingScenePart();
+            this->current_timing_sp = TimingEngineScenePart();
         }
-
-        return nullptr;
     }
 }

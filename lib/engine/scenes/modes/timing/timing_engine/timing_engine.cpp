@@ -1,35 +1,25 @@
-#include "timing.hpp"
-
 #include <colors.hpp>
+
+#include "timing_engine.hpp"
+
 
 
 
 namespace Engine {
-    TimingScenePart::TimingScenePart(
-        int ticks_per_loop,
-        int max_score,
-        double curve,
-        size_t goal_led_idx,
-        int goal_led_flash_every,
-        int stop_length_ticks,
-        int stop_flash_every
-    ) :
-        ticks_per_loop(ticks_per_loop),
-        max_score(max_score),
-        curve(curve),
-        goal_led_idx(goal_led_idx),
-        goal_led_flash_every(goal_led_flash_every),
-        stop_length_ticks(stop_length_ticks),
-        stop_flash_every(stop_flash_every)
-    {}
+    TimingEngineScenePart::TimingEngineScenePart() : ScenePart() {}
 
-    void TimingScenePart::tick() {
+    void TimingEngineScenePart::init(TimingSettings settings) {
+        this->ticks_per_loop = settings.ticks_per_loop;
+        this->curve = settings.curve;
+    }
+
+    void TimingEngineScenePart::tick() {
         if (is_finished) return;
         if (state == State::ROTATING) tick_state_rotating();
         else if (state == State::STOPPED) tick_state_stopped();
     }
 
-    void TimingScenePart::tick_state_rotating() {
+    void TimingEngineScenePart::tick_state_rotating() {
         loop_interpolation += 1.0 / ticks_per_loop;
         if (loop_interpolation >= 1.0) loop_interpolation = 0;
 
@@ -50,17 +40,12 @@ namespace Engine {
         Drivers::lights_driver.led_array[next_on_led_idx] = led_color;
         Drivers::lights_driver.show();
 
-        Serial.print(this->goal_led_idx);
-        Serial.print("\t");
-        Serial.print(loop_interpolation);
-
-
         if (Drivers::button_driver_action.is_clicked()) {
             this->on_trigger_stop();
         }
     }
 
-    void TimingScenePart::tick_state_stopped() {
+    void TimingEngineScenePart::tick_state_stopped() {
         stop_timer--;
         this->is_stop_clicked = false;
         if (stop_timer <= 0) {
@@ -103,7 +88,7 @@ namespace Engine {
         Drivers::lights_driver.show();
     }
 
-    void TimingScenePart::on_trigger_stop() {
+    void TimingEngineScenePart::on_trigger_stop() {
         this->stop_timer = stop_length_ticks;
         this->state = State::STOPPED;
         this->is_stop_clicked = true;
@@ -111,17 +96,17 @@ namespace Engine {
     }
 
 
-    size_t TimingScenePart::get_internal_led_idx() {
+    size_t TimingEngineScenePart::get_internal_led_idx() {
         return floor(this->loop_interpolation * Drivers::lights_driver.lights_count);
     }
 
-    size_t TimingScenePart::get_shown_led_idx() {
+    size_t TimingEngineScenePart::get_shown_led_idx() {
         int result = this->get_internal_led_idx() + goal_led_idx;
         if (result >= Drivers::lights_driver.lights_count) result -= Drivers::lights_driver.lights_count;
         return result;
     }
 
-    CRGB TimingScenePart::get_shown_led_color() {
+    CRGB TimingEngineScenePart::get_shown_led_color() {
         return ColorFromPalette(
             Gradients::timing_palette,
             floor((float)this->get_internal_led_idx() / (float)Drivers::lights_driver.lights_count * 255),
@@ -132,7 +117,7 @@ namespace Engine {
 
 
     // Ex. [10, 7.5, 5, 2.5, 0, 2.5, 5, 7.5] for idx = 0, 1, 2, ..., 6, 7
-    int TimingScenePart::calculate_score_raw() {
+    int TimingEngineScenePart::calculate_score_raw() {
         const int internal_led_idx = this->get_internal_led_idx();
         if (internal_led_idx == 0) return this->max_score;
 
@@ -169,7 +154,7 @@ namespace Engine {
     }
 
 
-    int TimingScenePart::calculate_score_weighted() {
+    int TimingEngineScenePart::calculate_score_weighted() {
         const int raw_score = this->calculate_score_raw();
 
         if (this->curve == 0) {

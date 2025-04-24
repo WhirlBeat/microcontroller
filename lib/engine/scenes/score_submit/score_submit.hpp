@@ -32,13 +32,13 @@ namespace Engine {
 
         static const size_t confirm_choices_count = 2;
         static const char* confirm_choices[confirm_choices_count];
-        SelectMenuScenePart confirm_part{confirm_choices, confirm_choices_count, 3};
+        SelectMenuScenePart confirm_menu{};
 
         ScoreSubmitScene();
         void init(const char* table_name, int score);
 
         void begin() override;
-        Scene* tick() override;
+        void tick() override;
 
 
         void tick_state_setting_username();

@@ -18,6 +18,8 @@ namespace Engine {
     LeaderboardScene::LeaderboardScene() : Scene() {}
 
     void LeaderboardScene::init(const char* table_name, int load_count, int center_on) {
+        this->confirm_exit_menu.init(this->choices, this->CHOICES_COUNT, 2);
+
         this->table_name = table_name;
         this->load_count = load_count;
         this->center_on = center_on;
@@ -27,22 +29,18 @@ namespace Engine {
         this->load_entries();
     }
 
-    Scene* LeaderboardScene::tick() {
+    void LeaderboardScene::tick() {
         if (this->state == DISPLAY_ENTRIES) {
             this->update_display_entries_controls();
             this->render_entries(this->current_center_idx);
-            return nullptr;
         }
         if (this->state == CONFIRM_EXIT) {
             this->tick_confirm_exit_scene_part();
-            return nullptr;
         }
         if (this->state == EXIT) {
             Drivers::display_driver.clear_all();
-            return &main_menu_scene;
+            scene_loader.go_back_to_scene(SceneIds::MAIN_MENU);
         }
-
-        return nullptr;
     }
 
     void LeaderboardScene::load_entries() {
@@ -97,13 +95,10 @@ namespace Engine {
             start_idx = end_idx - (Drivers::display_driver.size_y - 1);
         }
 
-        Serial.println(String("a ") + start_idx + " b " + end_idx + " c " + center_idx);
-
         for (int idx = start_idx; idx <= end_idx; idx++) {
             LeaderboardEntry entry = this->entries[idx];
 
             int current_row = idx - start_idx;
-            Serial.println(current_row);
             if (idx == center_idx) {
                 Drivers::display_driver.print_at(1, current_row, ">");
             }
@@ -119,10 +114,10 @@ namespace Engine {
         Drivers::display_driver.clear_all();
         Drivers::display_driver.print_center(0, "Exit leaderboard?");
 
-        this->confirm_exit_scene_part.tick();
+        this->confirm_exit_menu.tick();
 
         if (Drivers::button_driver_action.is_clicked()) {
-            if (this->confirm_exit_scene_part.get_selected_idx() == 1) {
+            if (this->confirm_exit_menu.get_selected_idx() == 1) {
                 this->state = EXIT;
             }
             else {

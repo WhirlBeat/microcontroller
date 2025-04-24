@@ -3,7 +3,9 @@
 
 
 namespace Engine {
-    ArrowsScenePart::ArrowsScenePart(int row) {
+    ArrowsScenePart::ArrowsScenePart() {}
+
+    void ArrowsScenePart::init(int row) {
         this->row = row;
     }
 

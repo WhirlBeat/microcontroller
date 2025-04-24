@@ -20,15 +20,19 @@ namespace Engine {
         };
 
 
-        static const int CHOICE_ROW = 2;
+        static const int ROW_SELECT_MENU = 2;
         static const int DESCRIPTION_ROW = 3;
 
-        SelectMenuScenePart select_menu{choices, choices_count, CHOICE_ROW};
+        SelectMenuScenePart select_menu{};
 
         MainMenuScene();
 
+        const char* const get_id() override;
+
+        void init();
+
         void begin() override;
-        Scene* tick() override;
+        void tick() override;
     };
 
 

@@ -33,12 +33,12 @@ namespace Engine {
         State state = DISPLAY_ENTRIES;
 
 
-        static const size_t choices_count = 2;
-        const char* choices[choices_count] = {
+        static const size_t CHOICES_COUNT = 2;
+        const char* choices[CHOICES_COUNT] = {
             "No", "Yes"
         };
 
-        SelectMenuScenePart confirm_exit_scene_part{choices, choices_count, 2};
+        SelectMenuScenePart confirm_exit_menu{};
 
 
         const char* table_name = nullptr;
@@ -56,7 +56,7 @@ namespace Engine {
         void init(const char* table_name, int load_count, int center_on = -1);
 
         void begin() override;
-        Scene* tick() override;
+        void tick() override;
 
         void load_entries();
         void update_display_entries_controls();

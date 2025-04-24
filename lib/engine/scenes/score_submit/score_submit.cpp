@@ -7,11 +7,13 @@ namespace Engine {
 
     ScoreSubmitScene::ScoreSubmitScene() : Scene::Scene() {
         for (int i = 0; i < this->USERNAME_LENGTH; i++) {
-            this->char_select_parts[i] = CharSelectScenePart(0, this->get_char_col(i), 2);
+            this->char_select_parts[i] = CharSelectScenePart();
+            this->char_select_parts[i].init(0, this->get_char_col(i), 2);
         }
     }
 
     void ScoreSubmitScene::init(const char* table_name, int score) {
+        this->confirm_menu.init(confirm_choices, confirm_choices_count, 3);
         this->table_name = table_name;
         this->score = score;
     }
@@ -22,7 +24,7 @@ namespace Engine {
         }
     }
 
-    Scene* ScoreSubmitScene::tick() {
+    void ScoreSubmitScene::tick() {
         Drivers::display_driver.clear_all();
         if (this->state == SETTING_USERNAME) {
             this->tick_state_setting_username();
@@ -31,9 +33,8 @@ namespace Engine {
         } else if (this->state == SUBMIT) {
             this->submit_score();
 
-            return &this->leaderboard_scene;
+            scene_loader.switch_scene(&this->leaderboard_scene);
         }
-        return nullptr;
     }
 
     void ScoreSubmitScene::tick_state_setting_username() {
@@ -73,10 +74,10 @@ namespace Engine {
         String score_str = String(this->score) + " -- by " + this->get_username();
         Drivers::display_driver.print_center(1, score_str.c_str());
 
-        this->confirm_part.tick();
+        this->confirm_menu.tick();
 
         if (Drivers::button_driver_action.is_clicked()) {
-            if (this->confirm_part.get_selected_idx() == 0) {
+            if (this->confirm_menu.get_selected_idx() == 0) {
                 this->state = SETTING_USERNAME;
                 return;
             } else {

@@ -1,12 +1,14 @@
 #pragma once
 
 #include <drivers.hpp>
-#include "../../scene_parts/scene_parts.hpp"
-#include "../../base/base.hpp"
+#include <scene_parts/scene_parts.hpp>
+#include <base/base.hpp>
+
+#include "../timing_mods/base/base.hpp"
 
 
 namespace Engine {
-    class TimingScenePart : public ScenePart {
+    class TimingEngineScenePart : public ScenePart {
     public:
         enum State {
             ROTATING, STOPPED
@@ -18,11 +20,11 @@ namespace Engine {
         double loop_interpolation = 0;
         int ticks_per_loop;
 
-        int max_score;
+        int max_score = 10000;
         double curve;
 
-        size_t goal_led_idx;
-        int goal_led_flash_every;
+        size_t goal_led_idx = floor(Drivers::lights_driver.lights_count / 2.0F);
+        int goal_led_flash_every = 100;
         int goal_led_timer = 0;
 
         int stop_length_ticks = 500;
@@ -33,15 +35,9 @@ namespace Engine {
         bool is_stop_clicked = false;
         bool is_stopped = false;
 
-        TimingScenePart(
-            int ticks_per_loop = 200,
-            int max_score = 10000,
-            double curve = 0.15,
-            size_t goal_led_idx = floor(Drivers::lights_driver.lights_count / 2.0F),
-            int goal_led_flash_every = 100,
-            int stop_length_ticks = 500,
-            int stop_flash_every = 50
-        );
+        TimingEngineScenePart();
+
+        void init(TimingSettings settings);
 
         void tick() override;
 

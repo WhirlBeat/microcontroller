@@ -16,11 +16,13 @@ namespace Engine {
 
     class CharSelectScenePart : public ScenePart {
     public:
-        int selected_idx;
-        int x;
-        int y;
+        int selected_idx = 0;
+        int x = 0;
+        int y = 0;
 
-        CharSelectScenePart(int selected_idx = 0, int x = 0, int y = 0);
+        CharSelectScenePart();
+
+        void init(int selected_idx = 0, int x = 0, int y = 0);
 
         void begin() override;
         void tick() override;

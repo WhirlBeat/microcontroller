@@ -7,9 +7,11 @@
 namespace Engine {
     class ArrowsScenePart : public ScenePart {
     public:
-        int row;
+        int row = 0;
 
-        ArrowsScenePart(int row);
+        ArrowsScenePart();
+
+        void init(int row);
 
         void begin() override;
         void tick() override;

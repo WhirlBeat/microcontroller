@@ -2,5 +2,4 @@
 
 #include "arrow/arrow.hpp"
 #include "select_menu/select_menu.hpp"
-#include "timing/timing.hpp"
 #include "char_select/char_select.hpp"

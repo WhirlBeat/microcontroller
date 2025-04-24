@@ -15,12 +15,15 @@ int get_left_border(int led_count, int slices, int slice_idx) {
 
 
 namespace Engine {
-    SelectMenuScenePart::SelectMenuScenePart(const char *const choices[], const size_t choices_count, int row) :
-        ScenePart(),
-        row(row),
-        choices(choices), choices_count(choices_count),
-        arrows(row)
-    {}
+    SelectMenuScenePart::SelectMenuScenePart() : ScenePart() {}
+
+    void SelectMenuScenePart::init(const char* choices[], size_t choices_count, int row) {
+        this->arrows.init(row);
+
+        this->row = row;
+        this->choices = choices;
+        this->choices_count = choices_count;
+    }
 
     void SelectMenuScenePart::begin() {
         this->arrows.begin();
@@ -49,6 +52,7 @@ namespace Engine {
     void SelectMenuScenePart::render() {
         this->arrows.clear_without_arrows();
         this->arrows.render();
+
         Drivers::display_driver.print_center(this->row, choices[select_idx]);
     }
 

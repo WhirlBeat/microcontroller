@@ -5,29 +5,49 @@
 
 
 namespace Engine {
-    SceneLoader::SceneLoader(Scene *initial_scene) :
-        current_scene(initial_scene)
-    {}
+    SceneLoader::SceneLoader() {}
 
     void SceneLoader::tick() {
-        if (!this->first_begin_called) {
-            this->current_scene->begin();
-            this->first_begin_called = true;
-        }
-
         Drivers::button_driver_left.tick();
         Drivers::button_driver_action.tick();
         Drivers::button_driver_right.tick();
 
-        Scene *next_scene = this->current_scene->tick();
+        this->get_current_scene()->tick();
 
         Drivers::display_driver.render();
+    }
 
-        if (next_scene) {
-            this->current_scene->end();
+    Scene *SceneLoader::get_current_scene() {
+        if (this->current_scene_idx < 0) {
+            return &this->blank_scene;
+        }
 
-            this->current_scene = next_scene;
-            this->current_scene->begin();
+        return this->scene_stack[this->current_scene_idx];
+    }
+
+    void SceneLoader::switch_scene(Scene *scene) {
+        this->get_current_scene()->end();
+
+        this->current_scene_idx++;
+        this->scene_stack[this->current_scene_idx] = scene;
+
+        this->get_current_scene()->begin();
+    }
+
+    void SceneLoader::go_back() {
+        if (this->current_scene_idx < 0) return;
+        this->current_scene_idx--;
+    }
+
+    void SceneLoader::go_back_to_scene(const char* const scene_id) {
+        for (int i = this->current_scene_idx; i >= 0; i--) {
+            if (strcmp(this->scene_stack[i]->get_id(), scene_id) == 0) {
+                this->current_scene_idx = i;
+                return;
+            }
         }
     }
+
+
+    SceneLoader scene_loader{};
 }

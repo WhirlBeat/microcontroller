@@ -8,15 +8,17 @@
 namespace Engine {
     class SelectMenuScenePart : public ScenePart {
     public:
-        int row;
+        int row = 0;
 
-        const char* const *choices;
-        const size_t choices_count;
+        const char* *choices = nullptr;
+        size_t choices_count = 0;
 
-        ArrowsScenePart arrows;
+        ArrowsScenePart arrows{};
 
 
-        SelectMenuScenePart(const char* const choices[], const size_t choices_count, int row);
+        SelectMenuScenePart();
+
+        void init(const char* choices[], size_t choices_count, int row);
 
         void begin() override;
         void tick() override;
