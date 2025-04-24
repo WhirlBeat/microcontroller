@@ -5,8 +5,10 @@
 namespace Engine {
     TimingModePlayScene::TimingModePlayScene() {}
 
-    void TimingModePlayScene::init(TimingMod** selected_mods, size_t selected_mods_count) {
-        this->selected_mods = selected_mods;
+    void TimingModePlayScene::init(TimingMod* selected_mods_arg[TIMING_MOD_COUNT], size_t selected_mods_count) {
+        for (int idx = 0; idx < selected_mods_count; idx++) {
+            this->selected_mods[idx] = selected_mods_arg[idx];
+        }
         this->selected_mods_count = selected_mods_count;
 
         this->restart_engine();
@@ -19,8 +21,11 @@ namespace Engine {
             settings = selected_mods[idx]->modify_settings(settings);
         }
 
+        Serial.println("constructor");
+        this->timing_engine = TimingEngineScenePart();
+
+        Serial.println("init");
         this->timing_engine.init(settings);
-        this->timing_engine.begin();
     }
 
     void TimingModePlayScene::tick() {
