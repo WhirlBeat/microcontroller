@@ -114,7 +114,6 @@ namespace Drivers {
     }
 
     void LCDDisplayDriver::render() {
-        Serial.println("Render display");
         for (int row = 0; row < this->size_y; row++) {
             int col = 0;
             while (true) {
