@@ -73,7 +73,7 @@ namespace Drivers {
         return result.c_str();
     }
 
-    JsonDocument APIDriver::get_table(String url, int load_count, int center_on) {
+    JsonDocument APIDriver::get_table(String route, int load_count, int center_on) {
         JsonDocument query_params;
 
         if (load_count != -1) {
@@ -83,7 +83,7 @@ namespace Drivers {
             query_params["center_on"] = center_on;
         }
 
-        return this->make_get_request(url, query_params);
+        return this->make_get_request(route, query_params);
     }
 
     JsonDocument APIDriver::make_get_request(String route, JsonDocument query_params) {
@@ -179,7 +179,7 @@ namespace Drivers {
         return response;
     }
 
-    const char* timing_table_name = "/scores/timing";
+    const char* timing_table_route = "/scores/timing";
 
     APIDriver api_driver{};
 }

@@ -4,6 +4,7 @@
 #include <scenes/modes/base/score_submit/score_submit.hpp>
 #include "../timing_engine/timing_engine.hpp"
 #include "../timing_mods/timing_mods.hpp"
+#include "../timing_score_submit/timing_score_submit.hpp"
 
 
 
@@ -20,7 +21,7 @@ namespace Engine {
         int attempts = 5;
         int attempt_idx = 0;
 
-        ScoreSubmitScene score_submit{};
+        TimingModeScoreSubmitScene score_submit{};
 
 
         static const int ROW_ATTEMPTS = 0;

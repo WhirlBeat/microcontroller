@@ -3,33 +3,18 @@
 
 
 namespace Engine {
-    LeaderboardEntry::LeaderboardEntry(int id, String username, int score, int placement) :
-        id(id),
-        username(username),
-        score(score),
-        placement(placement)
-    {}
-    LeaderboardEntry::LeaderboardEntry() :
-        username(""),
-        score(0),
-        placement(0)
-    {}
-
     LeaderboardScene::LeaderboardScene() : Scene() {}
 
-    void LeaderboardScene::init(const char* table_name, int load_count, int center_on) {
+    void LeaderboardScene::init(int load_count, int center_on) {
         this->confirm_exit_menu.init(this->choices, this->CHOICES_COUNT, 2);
 
-        this->table_name = table_name;
         this->load_count = load_count;
         this->center_on = center_on;
-
-        Serial.println("init");
-        Serial.println(this->center_on);
     }
 
     void LeaderboardScene::begin() {
         this->load_entries();
+        this->current_center_idx = this->get_center_idx();
     }
 
     void LeaderboardScene::tick() {
@@ -46,40 +31,15 @@ namespace Engine {
         }
     }
 
-    void LeaderboardScene::load_entries() {
-        Serial.println(this->center_on);
-        JsonDocument result = Drivers::api_driver.get_table(this->table_name, this->load_count, this->center_on);
-        JsonArray more_info = result["moreInfo"].as<JsonArray>();
-
-        this->actual_entry_count = more_info.size();
-        for (int idx = 0; idx < this->actual_entry_count; idx++) {
-            JsonObject obj = more_info[idx].as<JsonObject>();
-
-            this->entries[idx] = LeaderboardEntry(
-                obj["id"].as<int>(),
-                String(obj["username"].as<const char*>()),
-                obj["score"].as<int>(),
-                obj["placement"].as<int>()
-            );
-        }
-
-        for (int idx = 0; idx < this->actual_entry_count; idx++) {
-            if (this->entries[idx].id == this->center_on) {
-                this->current_center_idx = idx;
-                break;
-            }
-        }
-    }
-
     void LeaderboardScene::update_display_entries_controls() {
         if (Drivers::button_driver_left.is_click_repeated()) {
             this->current_center_idx--;
-            if (this->current_center_idx < 0) this->current_center_idx = this->actual_entry_count - 1;
+            if (this->current_center_idx < 0) this->current_center_idx = this->get_entry_count() - 1;
         }
 
         if (Drivers::button_driver_right.is_click_repeated()) {
             this->current_center_idx++;
-            if (this->current_center_idx >= this->actual_entry_count) this->current_center_idx = 0;
+            if (this->current_center_idx >= this->get_entry_count()) this->current_center_idx = 0;
         }
 
         if (Drivers::button_driver_action.is_clicked()) {
@@ -94,21 +54,14 @@ namespace Engine {
         if (start_idx < 0) start_idx = 0;
 
         int end_idx = start_idx + (Drivers::display_driver.size_y - 1);
-        if (end_idx >= this->actual_entry_count) {
-            end_idx = this->actual_entry_count - 1;
+        if (end_idx >= this->get_entry_count()) {
+            end_idx = this->get_entry_count() - 1;
             start_idx = end_idx - (Drivers::display_driver.size_y - 1);
         }
 
         for (int idx = start_idx; idx <= end_idx; idx++) {
-            LeaderboardEntry entry = this->entries[idx];
-
-            int current_row = idx - start_idx;
-            if (idx == center_idx) {
-                Drivers::display_driver.print_at(1, current_row, ">");
-            }
-
-            String placement_str = String("#") + entry.placement + " " + entry.username + " " + entry.score;
-            Drivers::display_driver.print_at(2, current_row, placement_str.c_str());
+            int display_row_idx = idx - start_idx;
+            this->render_one_entry(2, display_row_idx, idx);
         }
     }
 

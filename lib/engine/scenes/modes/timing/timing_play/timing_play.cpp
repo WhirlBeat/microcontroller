@@ -69,7 +69,8 @@ namespace Engine {
             this->attempt_idx++;
 
             if (this->attempt_idx >= this->attempts) {
-                this->score_submit.init(Drivers::timing_table_name, this->total_score);
+                this->score_submit.init();
+                this->score_submit.init_sub(this->total_score, this->selected_mods, this->selected_mods_count);
                 this->score_submit.begin();
 
                 scene_loader.switch_scene(&this->score_submit);

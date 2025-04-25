@@ -8,19 +8,6 @@
 
 
 namespace Engine {
-    class LeaderboardEntry {
-    public:
-        int id;
-        String username;
-        int score;
-        int placement;
-
-        LeaderboardEntry(int id, String username, int score, int placement);
-        LeaderboardEntry();
-    };
-
-
-
     class LeaderboardScene : public Scene {
     public:
         enum State {
@@ -41,27 +28,27 @@ namespace Engine {
         SelectMenuScenePart confirm_exit_menu{};
 
 
-        const char* table_name = nullptr;
         int load_count = 10;
         int center_on = -1;
-
-        static const int MAX_ENTRY_COUNT = 20;
-        LeaderboardEntry entries[MAX_ENTRY_COUNT];
-        int actual_entry_count = 0;
 
         int current_center_idx = 0;
 
         LeaderboardScene();
 
-        void init(const char* table_name, int load_count, int center_on = -1);
+        void init(int load_count = 10, int center_on = -1);
 
         void begin() override;
         void tick() override;
 
-        void load_entries();
+        virtual void load_entries() = 0;
+        virtual int get_entry_count() = 0;
+        virtual int get_center_idx() = 0;
+
         void update_display_entries_controls();
         void render_entries(int center_idx = 0);
+        virtual void render_one_entry(int x, int y, int entry_idx) = 0;
 
         void tick_confirm_exit_scene_part();
+
     };
 }

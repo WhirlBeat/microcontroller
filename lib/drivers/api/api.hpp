@@ -38,7 +38,7 @@ namespace Drivers {
     };
 
 
-    extern const char* timing_table_name;
+    extern const char* timing_table_route;
 
 
     extern APIDriver api_driver;
