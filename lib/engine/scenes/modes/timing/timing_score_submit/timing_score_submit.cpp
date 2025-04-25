@@ -26,7 +26,7 @@ namespace Engine {
         JsonDocument request_body;
         request_body["username"] = username.c_str();
         request_body["score"] = this->score;
-        request_body["multiplier"] = 1.0F;
+        request_body["multiplier"] = get_timing_mod_total_multiplier(this->selected_mods, this->selected_mods_count);
 
         JsonArray array = request_body["mods"].as<JsonArray>();
         for (int idx = 0; idx < this->selected_mods_count; idx++) {

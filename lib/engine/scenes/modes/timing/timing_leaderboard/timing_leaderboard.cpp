@@ -42,8 +42,8 @@ namespace Engine {
         String render_str =
             String("#") + entry["placement"].as<String>() + " " +
             entry["username"].as<String>() + " " +
-            entry["score"].as<int>() +
-            "x" + String(entry["multiplier"].as<float>(), 2);
+            entry["score"].as<int>() + " " +
+            String(entry["multiplier"].as<float>(), 2);
 
         Drivers::display_driver.print_at(x, y, render_str.c_str());
     }
