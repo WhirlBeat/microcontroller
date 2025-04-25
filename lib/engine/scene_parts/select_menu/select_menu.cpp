@@ -23,6 +23,8 @@ namespace Engine {
         this->row = row;
         this->choices = choices;
         this->choices_count = choices_count;
+
+        this->select_idx = 0;
     }
 
     void SelectMenuScenePart::begin() {

@@ -7,7 +7,7 @@
 
 
 
-Engine::TimingModeSetupScene scene{};
+Engine::MainMenuScene scene{};
 
 Tools::TPS tps;
 

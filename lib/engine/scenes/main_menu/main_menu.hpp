@@ -1,8 +1,9 @@
 #pragma once
 
 #include <drivers.hpp>
-#include "../../scene_parts/scene_parts.hpp"
-#include "../../base/base.hpp"
+#include <scene_parts/scene_parts.hpp>
+#include <base/base.hpp>
+#include "../modes/modes.hpp"
 
 
 namespace Engine {
@@ -18,6 +19,9 @@ namespace Engine {
             "View leaderboards!",
             "About this project!"
         };
+
+
+        TimingModeSetupScene timing_mode_scene;
 
 
         static const int ROW_SELECT_MENU = 2;

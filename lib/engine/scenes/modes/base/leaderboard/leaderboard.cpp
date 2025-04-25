@@ -10,6 +10,9 @@ namespace Engine {
 
         this->load_count = load_count;
         this->center_on = center_on;
+
+        this->state = DISPLAY_ENTRIES;
+        this->display_starting_entry_idx = 0;
     }
 
     void LeaderboardScene::begin() {

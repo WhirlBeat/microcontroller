@@ -4,7 +4,6 @@
 
 #include <scene_parts/scene_parts.hpp>
 #include <base/base.hpp>
-#include <scenes/main_menu/main_menu.hpp>
 
 
 namespace Engine {
@@ -17,7 +16,7 @@ namespace Engine {
         };
 
 
-        State state = DISPLAY_ENTRIES;
+        State state;
 
 
         static const size_t CHOICES_COUNT = 2;
@@ -31,7 +30,7 @@ namespace Engine {
         int load_count = 10;
         int center_on = -1;
 
-        int display_starting_entry_idx = 0;
+        int display_starting_entry_idx;
         const int DISPLAY_ROWS = Drivers::display_driver.size_y - 1;
         const int DISPLAY_OFFSET = 1;
 
@@ -39,7 +38,7 @@ namespace Engine {
 
         LeaderboardScene();
 
-        void init(int load_count = 10, int center_on = -1);
+        virtual void init(int load_count = 10, int center_on = -1);
 
         void begin() override;
         void tick() override;

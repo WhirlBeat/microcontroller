@@ -20,11 +20,12 @@ namespace Engine {
         TimingModeModSelectScene mod_select_scene{};
         TimingModePlayScene play_scene{};
 
-        static const int SELECT_MENU_CHOICES = 3;
+        static const int SELECT_MENU_CHOICES = 4;
         const char* select_menu_choices[SELECT_MENU_CHOICES] = {
             "Play",
             "Select Mods",
-            "Info"
+            "Info",
+            "Back"
         };
         SelectMenuScenePart select_menu{};
 

@@ -10,6 +10,11 @@ namespace Engine {
         return entries.size();
     }
 
+    void TimingLeaderboardScene::init(int load_count, int center_on) {
+        LeaderboardScene::init(load_count, center_on);
+        this->response.clear();
+    }
+
     int TimingLeaderboardScene::get_center_idx() {
         if (this->center_on <= 0) return 0;
 

@@ -4,7 +4,6 @@
 
 #include <scene_parts/scene_parts.hpp>
 #include <base/base.hpp>
-#include <scenes/main_menu/main_menu.hpp>
 #include <scenes/modes/base/base.hpp>
 
 #include "../timing_mods/timing_mods.hpp"
@@ -19,7 +18,7 @@ namespace Engine {
         TimingMod* selected_mods[TIMING_MOD_COUNT];
         size_t selected_mods_count;
 
-        int score = 0;
+        int score;
 
         TimingModeScoreSubmitScene();
         void init_sub(int score, TimingMod* selected_mods[TIMING_MOD_COUNT], size_t selected_mods_count);

@@ -12,13 +12,13 @@ namespace Engine {
     class TimingModePlayScene : public Scene {
     public:
         TimingMod* selected_mods[TIMING_MOD_COUNT];
-        size_t selected_mods_count = 0;
+        size_t selected_mods_count;
 
         TimingEngineScenePart timing_engine{};
-        int total_score = 0;
-        int perfects = 0;
+        int total_score;
+        int perfects;
 
-        int attempts = 5;
+        const int attempts = 5;
         int attempt_idx = 0;
 
         TimingModeScoreSubmitScene score_submit{};

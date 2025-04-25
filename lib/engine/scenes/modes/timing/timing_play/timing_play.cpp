@@ -11,6 +11,10 @@ namespace Engine {
         }
         this->selected_mods_count = selected_mods_count;
 
+        this->total_score = 0;
+        this->perfects = 0;
+        this->attempt_idx = 0;
+
         this->restart_engine();
     }
 

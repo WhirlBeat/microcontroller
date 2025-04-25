@@ -58,6 +58,8 @@ namespace Engine {
                 scene_loader.switch_scene(&this->play_scene);
             } else if (selected_idx == 1) {
                 scene_loader.switch_scene(&this->mod_select_scene);
+            } else if (selected_idx == 3) {
+                scene_loader.go_back_to_scene(SceneIds::MAIN_MENU);
             }
         }
     }

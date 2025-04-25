@@ -4,7 +4,6 @@
 
 #include <scene_parts/scene_parts.hpp>
 #include <base/base.hpp>
-#include <scenes/main_menu/main_menu.hpp>
 #include <scenes/modes/base/base.hpp>
 
 
@@ -14,6 +13,8 @@ namespace Engine {
         JsonDocument response;
 
         TimingLeaderboardScene();
+
+        void init(int load_count = 10, int center_on = -1) override;
 
         const char* get_name() override;
         int get_entry_count() override;

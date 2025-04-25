@@ -5,15 +5,18 @@
 namespace Engine {
     const char* ScoreSubmitScene::confirm_choices[confirm_choices_count] = {"No, edit name", "Yes, submit score"};
 
-    ScoreSubmitScene::ScoreSubmitScene() : Scene::Scene() {
+    ScoreSubmitScene::ScoreSubmitScene() : Scene::Scene() {}
+
+    void ScoreSubmitScene::init() {
+        this->confirm_menu.init(confirm_choices, confirm_choices_count, 3);
+
+        this->state = SETTING_USERNAME;
         for (int i = 0; i < this->USERNAME_LENGTH; i++) {
             this->char_select_parts[i] = CharSelectScenePart();
             this->char_select_parts[i].init(0, this->get_char_col(i), this->ROW_USERNAME);
         }
-    }
 
-    void ScoreSubmitScene::init() {
-        this->confirm_menu.init(confirm_choices, confirm_choices_count, 3);
+        this->selected_char_idx = 0;
     }
 
     void ScoreSubmitScene::begin() {

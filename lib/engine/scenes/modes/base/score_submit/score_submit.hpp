@@ -4,7 +4,6 @@
 
 #include <scene_parts/scene_parts.hpp>
 #include <base/base.hpp>
-#include <scenes/main_menu/main_menu.hpp>
 
 #include "../leaderboard/leaderboard.hpp"
 
@@ -19,12 +18,12 @@ namespace Engine {
         };
 
 
-        State state = SETTING_USERNAME;
+        State state;
 
         static const int USERNAME_LENGTH = 3;
         CharSelectScenePart char_select_parts[USERNAME_LENGTH];
 
-        size_t selected_char_idx = 0;
+        size_t selected_char_idx;
 
         static const size_t confirm_choices_count = 2;
         static const char* confirm_choices[confirm_choices_count];
