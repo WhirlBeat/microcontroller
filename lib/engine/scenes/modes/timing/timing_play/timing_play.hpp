@@ -17,7 +17,7 @@ namespace Engine {
 
         TimingModePlayScene();
 
-        void init(TimingMod** selected_mods, size_t selected_mods_count);
+        void init(TimingMod* selected_mods_arg[TIMING_MOD_COUNT], size_t selected_mods_count);
         void restart_engine();
 
         void tick() override;
