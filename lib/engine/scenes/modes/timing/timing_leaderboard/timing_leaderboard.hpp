@@ -15,6 +15,7 @@ namespace Engine {
 
         TimingLeaderboardScene();
 
+        const char* get_name() override;
         int get_entry_count() override;
         int get_center_idx() override;
         void load_entries() override;

@@ -22,6 +22,10 @@ namespace Engine {
         return 0;
     }
 
+    const char* TimingLeaderboardScene::get_name() {
+        return "Timing";
+    }
+
     void TimingLeaderboardScene::load_entries() {
         JsonDocument response = Drivers::api_driver.get_table(Drivers::timing_table_route, this->load_count, this->center_on);
         this->response = response;

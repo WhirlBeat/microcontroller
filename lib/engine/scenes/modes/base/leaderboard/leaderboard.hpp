@@ -31,7 +31,11 @@ namespace Engine {
         int load_count = 10;
         int center_on = -1;
 
-        int current_center_idx = 0;
+        int display_starting_entry_idx = 0;
+        const int DISPLAY_ROWS = Drivers::display_driver.size_y - 1;
+        const int DISPLAY_OFFSET = 1;
+
+        static const int ROW_TITLE = 0;
 
         LeaderboardScene();
 
@@ -40,6 +44,7 @@ namespace Engine {
         void begin() override;
         void tick() override;
 
+        virtual const char* get_name() = 0;
         virtual void load_entries() = 0;
         virtual int get_entry_count() = 0;
         virtual int get_center_idx() = 0;
