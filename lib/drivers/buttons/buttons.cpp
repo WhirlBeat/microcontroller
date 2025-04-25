@@ -41,7 +41,7 @@ namespace Drivers {
         if (ticks_since_press == 1) return true;
 
         if (ticks_since_press > before_delay) {
-            return (ticks_since_press - before_delay) % repeat_rate == 0;
+            return ((ticks_since_press - before_delay) % repeat_rate) == 0;
         } else {
             return false;
         }

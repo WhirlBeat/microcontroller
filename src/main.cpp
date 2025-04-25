@@ -43,7 +43,7 @@ void loop() {
     Engine::scene_loader.tick();
     Drivers::music_driver.tick();
 
-    tps.tick();
+    // tps.tick();
 
     delay(1);
 }
