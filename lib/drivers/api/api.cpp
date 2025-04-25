@@ -35,7 +35,9 @@ namespace Drivers {
             display_driver.print_center(2, tries_str.c_str());
             display_driver.render();
 
-            ScopedHTTPClient scoped_http{NetworkParams::base_url + this->hello_route + "?password=" + this->api_password};
+            ScopedHTTPClient scoped_http{NetworkParams::base_url + this->hello_route};
+            scoped_http.client.addHeader("Authorization", this->get_authorization_header());
+
             int response_code = scoped_http.client.GET();
 
             if (response_code == HTTP_CODE_OK) {
@@ -66,27 +68,48 @@ namespace Drivers {
         this->ensure_connection();
     }
 
+    const char* APIDriver::get_authorization_header() {
+        String result = String("Bearer ") + this->api_password;
+        return result.c_str();
+    }
 
+    JsonDocument APIDriver::get_table(String url, int load_count, int center_on) {
+        JsonDocument query_params;
 
-    JsonDocument APIDriver::get_table(const char* table_name, int load_count, int center_on) {
+        if (load_count != -1) {
+            query_params["load_count"] = load_count;
+        }
+        if (center_on != -1) {
+            query_params["center_on"] = center_on;
+        }
+
+        return this->make_get_request(url, query_params);
+    }
+
+    JsonDocument APIDriver::make_get_request(String route, JsonDocument query_params) {
         this->ensure_connection();
 
-        String result_url = NetworkParams::base_url + this->scores_route + "?tableName=" + table_name;
-        if (load_count > 0) {
-            result_url += "&loadCount=" + String(load_count);
-        }
+        String url = this->get_full_url(route);
 
-        if (center_on > 0) {
-            result_url += "&centerOn=" + String(center_on);
-        }
+        JsonObject obj = query_params.as<JsonObject>();
+        int idx = 0;
+        for (JsonPair kv : obj) {
+            String key = kv.key().c_str();
+            String value = kv.value().as<String>();
+            url += (idx == 0 ? "?" : "&") + key + "=" + value;
 
-        int responseCode = HTTP_CODE_CONTINUE;
+            idx++;
+        }
 
         String response_str;
+        Drivers::display_driver.clear_all();
         while (true) {
-            Serial.println("Attempting to get table from URL: " + result_url);
+            Serial.println("Attempting to GET from URL: " + url);
+            Drivers::display_driver.clear_row(0);
+            Drivers::display_driver.print_center(0, "Fetching...");
+            Drivers::display_driver.render();
 
-            ScopedHTTPClient scoped_http{result_url};
+            ScopedHTTPClient scoped_http{url};
             int response_code = scoped_http.client.GET();
 
             if (response_code == HTTP_CODE_OK) {
@@ -96,37 +119,43 @@ namespace Drivers {
 
             Serial.println("Error occurred. Status Code: " + String(response_code));
             Serial.println("Response body: " + scoped_http.client.getString());
+            Drivers::display_driver.clear_row(0);
+            Drivers::display_driver.print_center(0, "Error! Retrying...");
+            Drivers::display_driver.render();
             delay(this->retry_after);
         }
 
-        Serial.println("Finished.");
-        Serial.println(response_str);
+        Serial.println("Response body: " + response_str);
 
         JsonDocument response;
         deserializeJson(response, response_str);
         return response;
     }
 
-    JsonDocument APIDriver::post_score(const char* table_name, const char* username, int score) {
-        this->ensure_connection();
-        String result_url = NetworkParams::base_url + this->scores_route;
+    String APIDriver::get_full_url(String route) {
+        return this->base_url + route;
+    }
 
-        JsonDocument request;
-        request["tableName"] = table_name;
-        request["username"] = username;
-        request["score"] = score;
-        request["password"] = this->api_password;
+    JsonDocument APIDriver::make_post_request(String route, JsonDocument body) {
+        this->ensure_connection();
+
+        String url = this->get_full_url(route);
 
         String request_str;
-        serializeJson(request, request_str);
+        serializeJson(body, request_str);
 
         String response_str;
+        Drivers::display_driver.clear_all();
         while (true) {
-            Serial.println("Attempting to post score to URL: " + result_url);
+            Serial.println("Attempting to post score to URL: " + url);
             Serial.println("Request body: " + request_str);
+            Drivers::display_driver.clear_row(0);
+            Drivers::display_driver.print_center(0, "Posting...");
+            Drivers::display_driver.render();
 
-            ScopedHTTPClient scoped_http{result_url};
+            ScopedHTTPClient scoped_http{url};
             scoped_http.client.addHeader("Content-Type", "application/json");
+            scoped_http.client.addHeader("Authorization", this->get_authorization_header());
 
             int response_code = scoped_http.client.POST(request_str.c_str());
 
@@ -137,15 +166,20 @@ namespace Drivers {
 
             Serial.println("Error occurred. Status Code: " + String(response_code));
             Serial.println("Response body: " + scoped_http.client.getString());
+            Drivers::display_driver.clear_row(0);
+            Drivers::display_driver.print_center(0, "Error! Retrying...");
+            Drivers::display_driver.render();
             delay(this->retry_after);
         }
+
+        Serial.println("Response body: " + response_str);
 
         JsonDocument response;
         deserializeJson(response, response_str);
         return response;
     }
 
-    const char* timing_table_name = "timing";
+    const char* timing_table_name = "/scores/timing";
 
     APIDriver api_driver{};
 }

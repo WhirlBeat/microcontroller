@@ -99,7 +99,16 @@ namespace Engine {
     void Engine::ScoreSubmitScene::submit_score() {
         String username = this->get_username();
 
-        JsonDocument response = Drivers::api_driver.post_score(this->table_name, username.c_str(), this->score);
+        JsonDocument request_body;
+        request_body["username"] = username.c_str();
+        request_body["score"] = this->score;
+        request_body["multiplier"] = 1.0F;
+
+        JsonArray array = request_body.createNestedArray("mods");
+        array.add("FF");
+        array.add("SS");
+
+        JsonDocument response = Drivers::api_driver.make_post_request(this->table_name, request_body);
         int id = response["moreInfo"]["id"].as<int>();
 
         this->leaderboard_scene.init(this->table_name, 10, id);

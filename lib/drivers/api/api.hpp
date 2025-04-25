@@ -27,9 +27,14 @@ namespace Drivers {
 
         void begin();
 
+        const char* get_authorization_header();
+        String get_full_url(String route);
 
-        JsonDocument get_table(const char* table_name, int load_count = -1, int center_on = -1);
-        JsonDocument post_score(const char* table_name, const char* username, int score);
+
+        JsonDocument make_get_request(String url, JsonDocument query_params);
+        JsonDocument get_table(String url, int load_count = -1, int center_on = -1);
+
+        JsonDocument make_post_request(String url, JsonDocument body);
     };
 
 

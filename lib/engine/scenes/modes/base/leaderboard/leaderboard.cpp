@@ -23,6 +23,9 @@ namespace Engine {
         this->table_name = table_name;
         this->load_count = load_count;
         this->center_on = center_on;
+
+        Serial.println("init");
+        Serial.println(this->center_on);
     }
 
     void LeaderboardScene::begin() {
@@ -44,6 +47,7 @@ namespace Engine {
     }
 
     void LeaderboardScene::load_entries() {
+        Serial.println(this->center_on);
         JsonDocument result = Drivers::api_driver.get_table(this->table_name, this->load_count, this->center_on);
         JsonArray more_info = result["moreInfo"].as<JsonArray>();
 
