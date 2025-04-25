@@ -1,10 +1,10 @@
 #include <Arduino.h>
 
+
 #include <drivers.hpp>
 #include <engine.hpp>
 #include <tools.hpp>
 #include <colors.hpp>
-
 
 
 Engine::MainMenuScene scene{};
@@ -14,6 +14,7 @@ Tools::TPS tps;
 
 void setup() {
     Drivers::display_driver.begin();
+    Drivers::music_driver.begin();
     Drivers::lights_driver.show();
 
     Serial.begin(115200);
@@ -32,13 +33,17 @@ void setup() {
         while (true) { delay(10000); }
     }
 
+    Drivers::music_driver.play(2, true);
+
     scene.init();
     Engine::scene_loader.switch_scene(&scene);
 }
 
 void loop() {
     Engine::scene_loader.tick();
-    // tps.tick();
+    Drivers::music_driver.tick();
+
+    tps.tick();
 
     delay(1);
 }
