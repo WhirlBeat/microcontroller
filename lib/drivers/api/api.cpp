@@ -77,10 +77,10 @@ namespace Drivers {
         JsonDocument query_params;
 
         if (load_count != -1) {
-            query_params["load_count"] = load_count;
+            query_params["loadCount"] = load_count;
         }
         if (center_on != -1) {
-            query_params["center_on"] = center_on;
+            query_params["centerOn"] = center_on;
         }
 
         return this->make_get_request(route, query_params);
