@@ -21,10 +21,7 @@ namespace Engine {
             settings = selected_mods[idx]->modify_settings(settings);
         }
 
-        Serial.println("constructor");
         this->timing_engine = TimingEngineScenePart();
-
-        Serial.println("init");
         this->timing_engine.init(settings);
     }
 
