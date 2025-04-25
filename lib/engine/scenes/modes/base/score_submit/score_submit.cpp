@@ -68,6 +68,8 @@ namespace Engine {
     void ScoreSubmitScene::tick_confirm() {
         Drivers::display_driver.print_center(0, "Is this correct?");
 
+        this->render_score_summary();
+
         String username_str = String("by ") + this->get_username();
         Drivers::display_driver.print_center(this->ROW_USERNAME, username_str.c_str());
 
