@@ -2,9 +2,9 @@
 
 #include <drivers.hpp>
 
-#include "../../scene_parts/scene_parts.hpp"
-#include "../../base/base.hpp"
-#include "../main_menu/main_menu.hpp"
+#include <scene_parts/scene_parts.hpp>
+#include <base/base.hpp>
+#include <scenes/main_menu/main_menu.hpp>
 
 
 namespace Engine {

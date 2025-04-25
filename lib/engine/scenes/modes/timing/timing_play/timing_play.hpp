@@ -1,7 +1,7 @@
 #pragma once
 
 #include <base/base.hpp>
-#include "../../../score_submit/score_submit.hpp"
+#include <scenes/modes/base/score_submit/score_submit.hpp>
 #include "../timing_engine/timing_engine.hpp"
 #include "../timing_mods/timing_mods.hpp"
 
