@@ -36,17 +36,11 @@ namespace Engine {
         const int current_led_idx = engine->get_shown_led_idx();
         CRGB* current = &Drivers::lights_driver.led_array[current_led_idx];
 
-        Serial.println(visible_percent);
-        Serial.println(this->black_threshold);
-        Serial.println(visible_percent < this->black_threshold);
-
         if (visible_percent < this->black_threshold) {
             *current = CRGB::Black;
-            Serial.println("black");
         } else {
             uint8_t scale = (uint8_t)(floor(visible_percent * 255.0F));
             current->nscale8(scale);
-            Serial.println(scale);
         }
     }
 
