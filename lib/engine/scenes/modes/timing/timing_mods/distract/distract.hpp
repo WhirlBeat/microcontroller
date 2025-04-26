@@ -7,8 +7,8 @@
 namespace Engine {
     class TimingModDistract : public TimingMod {
     public:
-        float density = 0.4;
-        int change_every = 176;
+        float density = 0.9;
+        int change_every = 148;
 
         CRGB mask[ComponentParams::LED_COUNT];
 

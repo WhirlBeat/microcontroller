@@ -41,7 +41,11 @@ namespace Engine {
 
 
         for (int idx = 0; idx < ComponentParams::LED_COUNT; idx++) {
-            if (idx == engine->goal_led_idx) continue;
+            if (
+                idx == (engine->goal_led_idx - 1) || 
+                idx == engine->goal_led_idx || 
+                idx == (engine->goal_led_idx + 1)
+            ) continue;
 
             CRGB* current = &Drivers::lights_driver.led_array[idx];
             if (*current != CRGB::Black) continue;
