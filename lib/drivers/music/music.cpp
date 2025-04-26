@@ -31,6 +31,7 @@ namespace Drivers {
         if (this->current_song_id < 0) return;
 
         if (this->current_song_id != this->previous_song_id) {
+            Serial.println(String("Now playing ") + this->current_song_id);
             if (this->current_song_id < 0) {
                 this->df_player.stop();
             } else {
@@ -39,12 +40,19 @@ namespace Drivers {
             this->previous_song_id = this->current_song_id;
         }
 
+
+        this->loop_debounce_timer--;
+        if (this->loop_debounce_timer < 0) this->loop_debounce_timer = 0;
+
         if (
             this->should_loop &&
             this->df_player.available() &&
-            this->df_player.readType() == DFPlayerPlayFinished
+            this->df_player.readType() == DFPlayerPlayFinished &&
+            this->loop_debounce_timer == 0
         ) {
+            Serial.println(String("Looping ") + this->current_song_id);
             this->df_player.play(this->current_song_id);
+            this->loop_debounce_timer = 200;
         }
     }
 
