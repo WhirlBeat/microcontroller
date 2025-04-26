@@ -14,7 +14,7 @@ namespace Engine {
     }
 
     const char* TimingModSpeed::get_shorthand() {
-        return "FF";
+        return "SP";
     }
 
     const float TimingModSpeed::get_multiplier() {
