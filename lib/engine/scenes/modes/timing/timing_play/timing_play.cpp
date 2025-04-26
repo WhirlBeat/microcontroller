@@ -39,13 +39,9 @@ namespace Engine {
         const int current_led_idx = this->timing_engine.get_shown_led_idx();
         CRGB* current = &Drivers::lights_driver.led_array[current_led_idx];
 
-        Serial.println(String("Before: ") + current->r + " " + current->g + " " + current->b);
-
         for (int idx = 0; idx < this->selected_mods_count; idx++) {
             this->selected_mods[idx]->on_next_frame(&this->timing_engine);
         }
-
-        Serial.println(String("After: ") + current->r + " " + current->g + " " + current->b);
 
         Drivers::display_driver.clear_row(this->ROW_ATTEMPTS);
 

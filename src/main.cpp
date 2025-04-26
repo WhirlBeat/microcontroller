@@ -33,7 +33,7 @@ void setup() {
         while (true) { delay(10000); }
     }
 
-    Drivers::music_driver.play(2, true);
+    Drivers::music_driver.play(2);
 
     scene.init();
     Engine::scene_loader.switch_scene(&scene);
