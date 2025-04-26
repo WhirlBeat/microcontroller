@@ -21,6 +21,8 @@ namespace Engine {
     }
 
     void LeaderboardScene::tick() {
+        Drivers::music_driver.play(SongIDs::LEADERBOARD, true);
+
         if (this->state == DISPLAY_ENTRIES) {
             this->update_display_entries_controls();
             this->render_entries(this->display_starting_entry_idx);

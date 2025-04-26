@@ -21,6 +21,8 @@ namespace Engine {
 
 
     void MainMenuScene::tick() {
+        Drivers::music_driver.play(SongIDs::MAIN_MENU, true);
+
         Drivers::display_driver.print_center(0, "** WhirlBeat! **");
 
         select_menu.tick();

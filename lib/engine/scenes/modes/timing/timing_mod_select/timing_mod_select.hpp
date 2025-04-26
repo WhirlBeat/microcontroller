@@ -27,5 +27,6 @@ namespace Engine {
         void tick() override;
 
         void get_selected_mods(TimingMod** out_mods, size_t* out_size);
+        bool is_mods_enabled();
     };
 }

@@ -34,6 +34,8 @@ namespace Engine {
     }
 
     void TimingModePlayScene::tick() {
+        Drivers::music_driver.play(SongIDs::TIMING_PLAY, true);
+
         this->timing_engine.tick();
 
         const int current_led_idx = this->timing_engine.get_shown_led_idx();

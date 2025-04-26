@@ -15,6 +15,9 @@ namespace Engine {
     }
 
     void TimingModeSetupScene::tick() {
+        if (this->mod_select_scene.is_mods_enabled()) Drivers::music_driver.play(SongIDs::SETUP_REMIX, true);
+        else Drivers::music_driver.play(SongIDs::SETUP, true);
+
         Drivers::display_driver.print_center(this->ROW_TITLE, "T I M I N G");
 
 

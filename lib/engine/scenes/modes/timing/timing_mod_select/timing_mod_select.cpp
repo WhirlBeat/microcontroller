@@ -20,6 +20,9 @@ namespace Engine {
 
 
     void TimingModeModSelectScene::tick() {
+        if (this->is_mods_enabled()) Drivers::music_driver.play(SongIDs::SETUP_REMIX, true);
+        else Drivers::music_driver.play(SongIDs::SETUP, true);
+
         this->select_menu.tick();
         int selected_idx = this->select_menu.get_selected_idx();
 
@@ -60,5 +63,16 @@ namespace Engine {
             }
         }
         *out_size = current_idx;
+    }
+
+    bool TimingModeModSelectScene::is_mods_enabled() {
+        bool mods_enabled = false;
+        for (int idx = 0; idx < TIMING_MOD_COUNT; idx++) {
+            if (this->mod_select_mask[idx]) {
+                mods_enabled = true;
+                break;
+            }
+        }
+        return mods_enabled;
     }
 }
