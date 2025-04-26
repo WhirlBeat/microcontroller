@@ -18,7 +18,7 @@ namespace Engine {
     }
 
     const float TimingModSpeed::get_multiplier() {
-        return 1.0F;
+        return 1.13F;
     }
 
     void TimingModSpeed::init_start() {}

@@ -18,7 +18,7 @@ namespace Engine {
     }
 
     const float TimingModFade::get_multiplier() {
-        return 1.0F;
+        return 1.21F;
     }
 
     void TimingModFade::init_start() {}
