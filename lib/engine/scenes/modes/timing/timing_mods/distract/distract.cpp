@@ -20,7 +20,7 @@ namespace Engine {
     }
 
     const float TimingModDistract::get_multiplier() {
-        return 1.5F;
+        return 1.0F;
     }
 
     void TimingModDistract::init_start() {

@@ -18,14 +18,14 @@ namespace Engine {
     }
 
     const float TimingModSpeed::get_multiplier() {
-        return 1.5F;
+        return 1.0F;
     }
 
     void TimingModSpeed::init_start() {}
     void TimingModSpeed::init_attempt() {}
 
     TimingSettings TimingModSpeed::modify_settings(TimingSettings settings) {
-        settings.ticks_per_loop /= 2;
+        settings.ticks_per_loop = (int)((float)(settings.ticks_per_loop) / 1.75F);
         return settings;
     }
 
