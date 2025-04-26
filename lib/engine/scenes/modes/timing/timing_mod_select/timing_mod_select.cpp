@@ -26,11 +26,25 @@ namespace Engine {
         this->select_menu.tick();
         int selected_idx = this->select_menu.get_selected_idx();
 
+
+
         if (selected_idx == TIMING_MOD_COUNT) {
             Drivers::display_driver.clear_row(this->ROW_DESC);
             Drivers::display_driver.clear_row(this->ROW_ENABLE_STATUS);
 
             Drivers::display_driver.print_center(this->ROW_DESC, "Confirm selection.");
+
+            TimingMod* selected_mods[TIMING_MOD_COUNT];
+            size_t selected_mods_count = 0;
+            this->get_selected_mods(selected_mods, &selected_mods_count);
+
+            String multiplier_str =
+                String("Total Mult: ") +
+                String(get_timing_mod_total_multiplier(selected_mods, selected_mods_count), 2) +
+                "x";
+
+            Drivers::display_driver.clear_row(this->ROW_MULTIPLIER);
+            Drivers::display_driver.print_center(this->ROW_MULTIPLIER, multiplier_str.c_str());
 
             if (Drivers::button_driver_action.is_clicked()) {
                 scene_loader.go_back();
@@ -42,6 +56,10 @@ namespace Engine {
         Drivers::display_driver.clear_row(this->ROW_DESC);
         Drivers::display_driver.print_center(this->ROW_DESC, description);
 
+        Drivers::display_driver.clear_row(this->ROW_MULTIPLIER);
+        String multiplier_str = String("Mult Bonus: ") + String(this->mods[selected_idx]->get_multiplier(), 2) + "x";
+        Drivers::display_driver.print_center(this->ROW_MULTIPLIER, multiplier_str.c_str());
+
         if (Drivers::button_driver_action.is_clicked()) {
             this->mod_select_mask[selected_idx] = !this->mod_select_mask[selected_idx];
         }
@@ -49,7 +67,7 @@ namespace Engine {
         Drivers::display_driver.clear_row(this->ROW_ENABLE_STATUS);
         Drivers::display_driver.print_center(
             this->ROW_ENABLE_STATUS,
-            this->mod_select_mask[selected_idx] ? "Enabled" : "Disabled"
+            this->mod_select_mask[selected_idx] ? "ENABLED!" : "DISABLED!"
         );
         Drivers::display_driver.print_char_at(0, this->ROW_ENABLE_STATUS, CustomChars::ACTION);
     }
