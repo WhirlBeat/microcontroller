@@ -3,11 +3,9 @@
 
 
 namespace Engine {
-    TimingSettings::TimingSettings() {}
-
     TimingMod::TimingMod() {}
 
-    void TimingMod::init() {}
+    void TimingMod::on_next_frame(TimingEngineScenePart *engine) {}
 
     void TimingMod::tick() {}
     TimingSettings TimingMod::modify_settings(TimingSettings settings) {

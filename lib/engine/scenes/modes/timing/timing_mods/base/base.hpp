@@ -1,16 +1,10 @@
 #pragma once
 
+#include <scenes/modes/timing/timing_engine/timing_engine.hpp>
+
 
 
 namespace Engine {
-    class TimingSettings {
-    public:
-        int ticks_per_loop = 200;
-        double curve = 0.15;
-
-        TimingSettings();
-    };
-
     class TimingMod {
     public:
         TimingMod();
@@ -20,7 +14,10 @@ namespace Engine {
         virtual const char* get_shorthand() = 0;
         virtual const float get_multiplier() = 0;
 
-        virtual void init();
+        virtual void init_start() = 0;
+        virtual void init_attempt() = 0;
+
+        virtual void on_next_frame(TimingEngineScenePart *engine);
 
         virtual void tick();
         virtual TimingSettings modify_settings(TimingSettings settings);

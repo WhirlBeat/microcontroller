@@ -6,6 +6,9 @@
 
 
 namespace Engine {
+    TimingSettings::TimingSettings() {}
+
+
     TimingEngineScenePart::TimingEngineScenePart() : ScenePart() {}
 
     void TimingEngineScenePart::init(TimingSettings settings) {

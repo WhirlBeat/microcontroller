@@ -8,6 +8,8 @@ namespace Engine {
     void TimingModePlayScene::init(TimingMod* selected_mods_arg[TIMING_MOD_COUNT], size_t selected_mods_count) {
         for (int idx = 0; idx < selected_mods_count; idx++) {
             this->selected_mods[idx] = selected_mods_arg[idx];
+
+            this->selected_mods[idx]->init_start();
         }
         this->selected_mods_count = selected_mods_count;
 
@@ -23,6 +25,8 @@ namespace Engine {
 
         for (int idx = 0; idx < selected_mods_count; idx++) {
             settings = selected_mods[idx]->modify_settings(settings);
+
+            selected_mods[idx]->init_attempt();
         }
 
         this->timing_engine = TimingEngineScenePart();
@@ -31,6 +35,17 @@ namespace Engine {
 
     void TimingModePlayScene::tick() {
         this->timing_engine.tick();
+
+        const int current_led_idx = this->timing_engine.get_shown_led_idx();
+        CRGB* current = &Drivers::lights_driver.led_array[current_led_idx];
+
+        Serial.println(String("Before: ") + current->r + " " + current->g + " " + current->b);
+
+        for (int idx = 0; idx < this->selected_mods_count; idx++) {
+            this->selected_mods[idx]->on_next_frame(&this->timing_engine);
+        }
+
+        Serial.println(String("After: ") + current->r + " " + current->g + " " + current->b);
 
         Drivers::display_driver.clear_row(this->ROW_ATTEMPTS);
 

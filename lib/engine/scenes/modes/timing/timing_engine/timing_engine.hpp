@@ -4,10 +4,16 @@
 #include <scene_parts/scene_parts.hpp>
 #include <base/base.hpp>
 
-#include "../timing_mods/base/base.hpp"
-
 
 namespace Engine {
+    class TimingSettings {
+    public:
+        int ticks_per_loop = 200;
+        double curve = 0.15;
+
+        TimingSettings();
+    };
+
     class TimingEngineScenePart : public ScenePart {
     public:
         enum State {

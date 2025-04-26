@@ -21,6 +21,9 @@ namespace Engine {
         return 1.5F;
     }
 
+    void TimingModSpeed::init_start() {}
+    void TimingModSpeed::init_attempt() {}
+
     TimingSettings TimingModSpeed::modify_settings(TimingSettings settings) {
         settings.ticks_per_loop /= 2;
         return settings;
