@@ -26,6 +26,8 @@ namespace Engine {
     }
 
     void ScoreSubmitScene::tick() {
+        Drivers::music_driver.play(SongIDs::HIGHSCORE);
+
         Drivers::display_driver.clear_all();
         if (this->state == SETTING_USERNAME) {
             this->tick_state_setting_username();
@@ -66,8 +68,6 @@ namespace Engine {
     }
 
     void ScoreSubmitScene::tick_confirm() {
-        Drivers::music_driver.play(SongIDs::HIGHSCORE);
-
         Drivers::display_driver.print_center(0, "Is this correct?");
 
         this->render_score_summary();
