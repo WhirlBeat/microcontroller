@@ -26,9 +26,11 @@ namespace Engine {
         this->target_note_idx = 0;
 
         this->combo = 0;
+        this->score = 0;
     }
 
     void RhythmEngineScenePart::tick() {
+        if (this->state == FINISHED) return;
         if (this->state == STARTING) {
             this->init_start_time = millis();
             this->state = PLAYING;
@@ -97,7 +99,10 @@ namespace Engine {
         RhythmNote* target_note = this->notes[this->target_note_idx];
 
         while (true) {
-            if (this->target_note_idx >= this->note_count) break;
+            if (this->target_note_idx >= this->note_count) {
+                this->state = FINISHED;
+                return;
+            };
 
             if (this->notes[this->target_note_idx]->start_ms < visible_pos_start) {
                 this->target_note_idx++;
@@ -112,8 +117,6 @@ namespace Engine {
         int ok_timing_window = this->timing_window_ms;
 
         if (Drivers::button_driver_action.is_click()) {
-            if (this->target_note_idx >= this->note_count) return;
-
             int difference = abs(target_note->start_ms - time_pos);
 
             if (difference < perfect_timing_window) this->on_perfect();

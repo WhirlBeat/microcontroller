@@ -14,7 +14,8 @@ namespace Engine {
     public:
         enum State {
             STARTING,
-            PLAYING
+            PLAYING,
+            FINISHED
         };
 
         State state = STARTING;
