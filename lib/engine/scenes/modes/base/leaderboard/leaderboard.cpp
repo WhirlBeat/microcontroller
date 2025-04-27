@@ -37,17 +37,17 @@ namespace Engine {
     }
 
     void LeaderboardScene::update_display_entries_controls() {
-        if (Drivers::button_driver_left.is_click_repeated()) {
+        if (Drivers::button_driver_left.check_repeat_clicks()) {
             this->display_starting_entry_idx--;
             if (this->display_starting_entry_idx < 0) this->display_starting_entry_idx = this->get_entry_count() - 1;
         }
 
-        if (Drivers::button_driver_right.is_click_repeated()) {
+        if (Drivers::button_driver_right.check_repeat_clicks()) {
             this->display_starting_entry_idx++;
             if (this->display_starting_entry_idx >= this->get_entry_count()) this->display_starting_entry_idx = 0;
         }
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             this->state = CONFIRM_EXIT;
         }
     }
@@ -78,7 +78,7 @@ namespace Engine {
 
         this->confirm_exit_menu.tick();
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             if (this->confirm_exit_menu.get_selected_idx() == 1) {
                 this->state = EXIT;
             }

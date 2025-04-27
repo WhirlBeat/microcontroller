@@ -46,7 +46,7 @@ namespace Engine {
             Drivers::display_driver.clear_row(this->ROW_MULTIPLIER);
             Drivers::display_driver.print_center(this->ROW_MULTIPLIER, multiplier_str.c_str());
 
-            if (Drivers::button_driver_action.is_clicked()) {
+            if (Drivers::button_driver_action.check_click()) {
                 scene_loader.go_back();
             }
             return;
@@ -60,7 +60,7 @@ namespace Engine {
         String multiplier_str = String("Mult Bonus: ") + String(this->mods[selected_idx]->get_multiplier(), 2) + "x";
         Drivers::display_driver.print_center(this->ROW_MULTIPLIER, multiplier_str.c_str());
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             this->mod_select_mask[selected_idx] = !this->mod_select_mask[selected_idx];
         }
 

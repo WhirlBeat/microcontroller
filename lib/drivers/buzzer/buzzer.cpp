@@ -5,13 +5,13 @@
 
 
 namespace Drivers {
-    SoundDriver::SoundDriver(int pin) :
+    BuzzerDriver::BuzzerDriver(int pin) :
         pin(pin)
     {}
 
-    void SoundDriver::play_tone(int pitch, int duration_ms) {
+    void BuzzerDriver::play_tone(int pitch, int duration_ms) {
         tone(this->pin, pitch, duration_ms);
     }
 
-    SoundDriver sound_driver{};
+    BuzzerDriver buzzer_driver{};
 }

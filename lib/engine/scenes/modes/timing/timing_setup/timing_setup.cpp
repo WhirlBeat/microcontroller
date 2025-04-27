@@ -55,7 +55,7 @@ namespace Engine {
 
 
         int selected_idx = this->select_menu.get_selected_idx();
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             if (selected_idx == 0) {
                 this->play_scene.init(selected_mods, selected_mods_count);
                 scene_loader.switch_scene(&this->play_scene);

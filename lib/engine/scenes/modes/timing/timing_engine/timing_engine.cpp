@@ -42,7 +42,7 @@ namespace Engine {
 
         Drivers::lights_driver.led_array[next_on_led_idx] = led_color;
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             this->on_trigger_stop();
         }
     }
@@ -55,7 +55,7 @@ namespace Engine {
             return;
         }
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             this->is_finished = true;
             return;
         }

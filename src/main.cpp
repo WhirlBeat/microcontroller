@@ -24,7 +24,7 @@ void setup() {
     Drivers::api_driver.begin();
 
     Drivers::button_driver_action.tick();
-    if (Drivers::button_driver_action.is_held()) {
+    if (Drivers::button_driver_action.check_hold()) {
         Drivers::display_driver.print_center(0, "Boot stopped.");
         Drivers::display_driver.print_center(1, "Reset power");
         Drivers::display_driver.print_center(2, "to boot again.");
@@ -43,10 +43,6 @@ void setup() {
 void loop() {
     Engine::scene_loader.tick();
     Drivers::music_driver.tick();
-
-    if (Drivers::button_driver_action.is_clicked()) {
-        Drivers::sound_driver.play_tone(PITCH_C5, 50);
-    }
 
     // tps.tick();
 

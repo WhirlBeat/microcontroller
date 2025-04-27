@@ -36,12 +36,12 @@ namespace Engine {
     void SelectMenuScenePart::tick() {
         this->arrows.tick();
 
-        if (Drivers::button_driver_left.is_clicked()) {
+        if (Drivers::button_driver_left.check_click()) {
             select_idx--;
             if (select_idx < 0) select_idx = choices_count - 1;
         }
 
-        if (Drivers::button_driver_right.is_clicked()) {
+        if (Drivers::button_driver_right.check_click()) {
             select_idx++;
             if (select_idx >= (int)choices_count) select_idx = 0;
         }
@@ -74,9 +74,9 @@ namespace Engine {
 
 
         if (!(
-            Drivers::button_driver_right.is_held() ||
-            Drivers::button_driver_left.is_held() ||
-            Drivers::button_driver_action.is_held()
+            Drivers::button_driver_right.is_hold() ||
+            Drivers::button_driver_left.is_hold() ||
+            Drivers::button_driver_action.is_hold()
         )) {
             for (int i = lower_bound; i < upper_bound_exc; i++) {
                 Drivers::lights_driver.led_array[i] = ColorFromPalette(

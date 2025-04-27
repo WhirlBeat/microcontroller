@@ -54,7 +54,7 @@ namespace Engine {
         Drivers::display_driver.print_char_at(this->get_char_col(this->USERNAME_LENGTH - 1) + 2, this->ROW_USERNAME, CustomChars::ARROW_UP_DOWN);
 
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             this->selected_char_idx++;
             if (this->selected_char_idx >= this->USERNAME_LENGTH) {
                 this->selected_char_idx = 0;
@@ -77,7 +77,7 @@ namespace Engine {
 
         this->confirm_menu.tick();
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             if (this->confirm_menu.get_selected_idx() == 0) {
                 this->state = SETTING_USERNAME;
                 return;

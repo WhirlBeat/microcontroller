@@ -7,15 +7,23 @@
 namespace Drivers {
     class ButtonDriver {
     public:
-        ButtonDriver(int pin);
+        int pitch;
+
+        ButtonDriver(int pin, int pitch);
 
         bool read_value();
 
         void tick();
 
-        bool is_held() const;
-        bool is_clicked() const;
-        bool is_click_repeated(int repeat_rate = 100, int before_delay = 500);
+        bool check_hold() const;
+        bool check_click() const;
+        bool check_repeat_clicks(int repeat_rate = 100, int before_delay = 500) const;
+
+        bool is_hold() const;
+        bool is_click() const;
+        bool is_repeat_click(int repeat_rate = 100, int before_delay = 500) const;
+
+        void play_tone() const;
 
     private:
         int pin;

@@ -29,7 +29,7 @@ namespace Engine {
         Drivers::display_driver.clear_row(this->DESCRIPTION_ROW);
         Drivers::display_driver.print_center(this->DESCRIPTION_ROW, descriptions[select_menu.get_selected_idx()]);
 
-        if (Drivers::button_driver_action.is_clicked()) {
+        if (Drivers::button_driver_action.check_click()) {
             if (this->select_menu.get_selected_idx() == 0) {
                 this->timing_mode_scene.init();
                 scene_loader.switch_scene(&this->timing_mode_scene);
