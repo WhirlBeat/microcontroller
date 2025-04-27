@@ -14,7 +14,7 @@ namespace ComponentParams {
 
     const int DF_PLAYER_VOLUME = 10;
 
-    const int RHYTHM_OFFSET = 0;
+    const int RHYTHM_OFFSET = 100;
 }
 
 

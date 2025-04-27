@@ -5,6 +5,6 @@
 
 
 namespace Engine {
-    const int CHART_COUNT = 1;
+    const int CHART_COUNT = 2;
     extern RhythmChart* charts[CHART_COUNT];
 }

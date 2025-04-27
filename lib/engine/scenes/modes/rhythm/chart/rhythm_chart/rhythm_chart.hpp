@@ -20,4 +20,5 @@ namespace Engine {
 
 
     extern RhythmChart chart_test;
+    extern RhythmChart chart_ifg;
 }
