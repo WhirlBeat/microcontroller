@@ -10,7 +10,7 @@ namespace Engine {
 
     void RhythmEngineScenePart::init(RhythmChart *chart) {
         this->state = STARTING;
-        this->start_time = 0;
+        this->init_start_time = 0;
         this->offset = chart->offset;
 
         this->song_id = chart->song_id;
@@ -26,15 +26,18 @@ namespace Engine {
 
     void RhythmEngineScenePart::tick() {
         if (this->state == STARTING) {
-            Drivers::music_driver.play(this->song_id);
-            this->start_time = millis();
+            this->init_start_time = millis();
             this->state = PLAYING;
             return;
         }
 
 
-        int time_pos_raw = millis() - this->start_time;
+        int time_pos_raw = millis() - this->init_start_time - this->visible_before_hit_ms;
+        if (time_pos_raw > 0) {
+            Drivers::music_driver.play(this->song_id);
+        }
         int time_pos = time_pos_raw - this->get_total_offset();
+
 
         int visible_pos_start = time_pos - this->timing_window_ms;
         int visible_pos_end = time_pos + this->visible_before_hit_ms;
