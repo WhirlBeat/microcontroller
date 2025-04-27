@@ -2,6 +2,7 @@
 
 
 #include <drivers.hpp>
+#include <pitch.hpp>
 #include <engine.hpp>
 #include <tools.hpp>
 #include <colors.hpp>
@@ -42,6 +43,10 @@ void setup() {
 void loop() {
     Engine::scene_loader.tick();
     Drivers::music_driver.tick();
+
+    if (Drivers::button_driver_action.is_clicked()) {
+        Drivers::sound_driver.play_tone(PITCH_C5, 50);
+    }
 
     // tps.tick();
 

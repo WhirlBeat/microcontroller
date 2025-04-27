@@ -22,6 +22,8 @@ namespace Pins {
     const int PIN_BUTTON_RIGHT = 25;
 
     const int PIN_LEDSTRIP_DATA = 23;
+
+    const int PIN_BUZZER = 19;
 }
 
 
