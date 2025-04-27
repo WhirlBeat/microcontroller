@@ -111,7 +111,9 @@ namespace Engine {
         int good_timing_window = floor((float)this->timing_window_ms * (2.0F/3.0F));
         int ok_timing_window = this->timing_window_ms;
 
-        if (Drivers::button_driver_action.check_click()) {
+        if (Drivers::button_driver_action.is_click()) {
+            if (this->target_note_idx >= this->note_count) return;
+
             int difference = abs(target_note->start_ms - time_pos);
 
             if (difference < perfect_timing_window) this->on_perfect();
@@ -132,20 +134,24 @@ namespace Engine {
         this->add_score(this->perfect_base_score);
         this->combo++;
         this->previous_judgement = "PERFECT";
+        Drivers::buzzer_driver.play_tone(this->perfect_pitch, this->pitch_duration_ms);
     }
     void RhythmEngineScenePart::on_good() {
         this->add_score(this->good_base_score);
         this->combo++;
         this->previous_judgement = "GOOD";
+        Drivers::buzzer_driver.play_tone(this->good_pitch, this->pitch_duration_ms);
     }
     void RhythmEngineScenePart::on_ok() {
         this->add_score(this->ok_base_score);
         this->combo++;
         this->previous_judgement = "OK";
+        Drivers::buzzer_driver.play_tone(this->ok_pitch, this->pitch_duration_ms);
     }
     void RhythmEngineScenePart::on_miss() {
         this->combo = 0;
         this->previous_judgement = "MISS";
+        Drivers::buzzer_driver.play_tone(this->miss_pitch, this->pitch_duration_ms);
     }
 
     void RhythmEngineScenePart::add_score(int base_score) {

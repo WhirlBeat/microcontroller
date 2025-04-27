@@ -1,6 +1,8 @@
 #pragma once
 
 #include <drivers.hpp>
+#include <pitch.hpp>
+
 #include <scene_parts/scene_parts.hpp>
 #include <base/base.hpp>
 
@@ -36,8 +38,14 @@ namespace Engine {
         int target_note_idx = 0;
 
         const int perfect_base_score = 300;
+        const int perfect_pitch = PITCH_C5;
         const int good_base_score = 100;
+        const int good_pitch = PITCH_A4;
         const int ok_base_score = 50;
+        const int ok_pitch = PITCH_E4;
+        const int miss_pitch = PITCH_A3;
+
+        const int pitch_duration_ms = 50;
 
         const char* previous_judgement = "";
         int combo = 0;
