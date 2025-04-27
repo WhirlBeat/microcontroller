@@ -11,6 +11,7 @@ namespace Engine {
     void RhythmEngineScenePart::init(RhythmChart *chart) {
         this->state = STARTING;
         this->start_time = 0;
+        this->offset = chart->offset;
 
         this->song_id = chart->song_id;
 
@@ -31,9 +32,12 @@ namespace Engine {
             return;
         }
 
-        int song_pos = millis() - this->start_time;
-        int visible_pos_start = song_pos - this->timing_window_ms;
-        int visible_pos_end = song_pos + this->visible_before_hit_ms;
+
+        int time_pos_raw = millis() - this->start_time;
+        int time_pos = time_pos_raw - this->get_total_offset();
+
+        int visible_pos_start = time_pos - this->timing_window_ms;
+        int visible_pos_end = time_pos + this->visible_before_hit_ms;
 
         while (true) {
             int next_visible_note_end_idx = this->visible_notes_end_idx + 1;
@@ -59,8 +63,6 @@ namespace Engine {
             }
         }
 
-        Serial.println(String("a ") + this->visible_notes_start_idx + " - " + this->visible_notes_end_idx);
-
 
         Drivers::lights_driver.clear_led_array();
 
@@ -70,7 +72,7 @@ namespace Engine {
                 continue;
             }
 
-            float progress = 1 - ((float)(current_note->start_ms - song_pos) / (float)this->visible_before_hit_ms);
+            float progress = 1 - ((float)(current_note->start_ms - time_pos) / (float)this->visible_before_hit_ms);
             int light_idx = floor(progress * (float)(this->goal_led_idx));
             if (light_idx >= Drivers::lights_driver.lights_count) continue;
 
@@ -79,4 +81,9 @@ namespace Engine {
 
         Drivers::lights_driver.led_array[this->goal_led_idx] = CRGB::White;
     }
-}
+
+
+    int RhythmEngineScenePart::get_total_offset() {
+        return this->offset + ComponentParams::RHYTHM_OFFSET;
+    }
+}  // namespace Engine

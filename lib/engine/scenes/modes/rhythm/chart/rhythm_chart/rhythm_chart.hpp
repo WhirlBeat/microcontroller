@@ -9,12 +9,13 @@ namespace Engine {
     public:
         const char* name;
         const int song_id;
+        const int offset;
 
         static const int MAX_NOTES = 1000;
         RhythmNote notes[MAX_NOTES];
         const int note_count;
 
-        RhythmChart(const char* name, int song_id, RhythmNote *notes, int note_count);
+        RhythmChart(const char* name, int song_id, int offset, RhythmNote *notes, int note_count);
     };
 
 

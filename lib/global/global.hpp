@@ -13,6 +13,8 @@ namespace ComponentParams {
     const int LCD_DISPLAY_ADDRESS = 0x27;
 
     const int DF_PLAYER_VOLUME = 10;
+
+    const int RHYTHM_OFFSET = 0;
 }
 
 

@@ -20,6 +20,7 @@ namespace Engine {
         int song_id = 0;
 
         long start_time = 0;
+        int offset = 0;
 
         int visible_before_hit_ms = 2000;
         int timing_window_ms = 500;
@@ -37,5 +38,7 @@ namespace Engine {
         void init(RhythmChart *chart);
 
         void tick() override;
+
+        int get_total_offset();
     };
 }
