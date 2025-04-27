@@ -37,6 +37,8 @@ namespace Drivers {
             } else {
                 this->df_player.play(this->current_song_id);
             }
+
+            this->set_debounce_timer();
             this->previous_song_id = this->current_song_id;
         }
 
@@ -52,8 +54,12 @@ namespace Drivers {
         ) {
             Serial.println(String("Looping ") + this->current_song_id);
             this->df_player.play(this->current_song_id);
-            this->loop_debounce_timer = 200;
+            this->set_debounce_timer();
         }
+    }
+
+    void MusicDriver::set_debounce_timer(int debounce) {
+        this->loop_debounce_timer = 200;
     }
 
     void MusicDriver::play(int song_id, bool should_loop) {

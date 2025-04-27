@@ -34,6 +34,8 @@ namespace Drivers {
         void begin();
         void tick();
 
+        void set_debounce_timer(int debounce = 1000);
+
         void play(int song_id, bool should_loop = false);
         void stop();
 

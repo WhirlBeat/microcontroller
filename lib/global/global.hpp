@@ -12,7 +12,7 @@ namespace ComponentParams {
     const int LCD_DISPLAY_Y = 4;
     const int LCD_DISPLAY_ADDRESS = 0x27;
 
-    const int DF_PLAYER_VOLUME = 15;
+    const int DF_PLAYER_VOLUME = 10;
 }
 
 
