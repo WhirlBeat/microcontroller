@@ -8,7 +8,7 @@
 #include <colors.hpp>
 
 
-Engine::MainMenuScene scene{};
+Engine::RhythmModePlayScene scene{};
 
 Tools::TPS tps;
 
@@ -36,7 +36,7 @@ void setup() {
 
     Drivers::music_driver.play(2);
 
-    scene.init();
+    scene.init(&Engine::chart_test);
     Engine::scene_loader.switch_scene(&scene);
 }
 
