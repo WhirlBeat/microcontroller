@@ -12,6 +12,10 @@ namespace Engine {
     public:
         RhythmEngineScenePart engine{};
 
+        static const int ROW_SCORE = 0;
+        static const int ROW_JUDGEMENT = 1;
+        static const int ROW_COMBO = 2;
+
         RhythmModePlayScene();
 
         void init(RhythmChart* chart);

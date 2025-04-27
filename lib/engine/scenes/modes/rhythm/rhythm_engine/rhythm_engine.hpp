@@ -35,9 +35,13 @@ namespace Engine {
 
         int target_note_idx = 0;
 
-        const int perfect_score_add = 300;
-        const int good_score_add = 100;
-        const int ok_score_add = 50;
+        const int perfect_base_score = 300;
+        const int good_base_score = 100;
+        const int ok_base_score = 50;
+
+        const char* previous_judgement = "";
+        int combo = 0;
+        int score = 0;
 
 
         RhythmEngineScenePart();
@@ -47,5 +51,11 @@ namespace Engine {
         void tick() override;
 
         int get_total_offset();
+
+        void on_perfect();
+        void on_good();
+        void on_ok();
+        void on_miss();
+        void add_score(int base_score);
     };
 }

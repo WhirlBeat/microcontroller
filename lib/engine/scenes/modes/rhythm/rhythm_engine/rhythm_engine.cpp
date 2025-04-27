@@ -24,6 +24,8 @@ namespace Engine {
         this->visible_notes_end_idx = 0;
 
         this->target_note_idx = 0;
+
+        this->combo = 0;
     }
 
     void RhythmEngineScenePart::tick() {
@@ -96,8 +98,11 @@ namespace Engine {
 
         while (true) {
             if (this->target_note_idx >= this->note_count) break;
-    
-            if (this->notes[this->target_note_idx]->start_ms < visible_pos_start) this->target_note_idx++;
+
+            if (this->notes[this->target_note_idx]->start_ms < visible_pos_start) {
+                this->target_note_idx++;
+                this->on_miss();
+            }
             else break;
         }
 
@@ -109,19 +114,10 @@ namespace Engine {
         if (Drivers::button_driver_action.check_click()) {
             int difference = abs(target_note->start_ms - time_pos);
 
-            if (difference < perfect_timing_window) {
-                Drivers::display_driver.print_center(0, String(this->perfect_score_add).c_str());
-            }
-            else if (difference < good_timing_window) {
-                Drivers::display_driver.print_center(0, String(this->good_score_add).c_str());
-            }
-            else if (difference < ok_timing_window) {
-                Drivers::display_driver.print_center(0, String(this->ok_score_add).c_str());
-            }
-            else {
-                Drivers::display_driver.print_center(0, "MISS");
-            }
-
+            if (difference < perfect_timing_window) this->on_perfect();
+            else if (difference < good_timing_window) this->on_good();
+            else if (difference < ok_timing_window) this->on_ok();
+            else this->on_miss();
 
             this->target_note_idx++;
         }
@@ -131,4 +127,28 @@ namespace Engine {
     int RhythmEngineScenePart::get_total_offset() {
         return this->offset + ComponentParams::RHYTHM_OFFSET;
     }
-}  // namespace Engine
+
+    void RhythmEngineScenePart::on_perfect() {
+        this->add_score(this->perfect_base_score);
+        this->combo++;
+        this->previous_judgement = "PERFECT";
+    }
+    void RhythmEngineScenePart::on_good() {
+        this->add_score(this->good_base_score);
+        this->combo++;
+        this->previous_judgement = "GOOD";
+    }
+    void RhythmEngineScenePart::on_ok() {
+        this->add_score(this->ok_base_score);
+        this->combo++;
+        this->previous_judgement = "OK";
+    }
+    void RhythmEngineScenePart::on_miss() {
+        this->combo = 0;
+        this->previous_judgement = "MISS";
+    }
+
+    void RhythmEngineScenePart::add_score(int base_score) {
+        this->score += floor((float)base_score * (1.0F + (((float)this->combo) / 25.0F)));
+    }
+}
