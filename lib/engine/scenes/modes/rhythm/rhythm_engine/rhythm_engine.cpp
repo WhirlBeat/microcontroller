@@ -59,11 +59,18 @@ namespace Engine {
             }
         }
 
+        Serial.println(String("a ") + this->visible_notes_start_idx + " - " + this->visible_notes_end_idx);
+
 
         Drivers::lights_driver.clear_led_array();
 
         for (int idx = this->visible_notes_start_idx; idx <= this->visible_notes_end_idx; idx++) {
-            float progress = 1 - ((float)(this->notes[idx]->start_ms - song_pos) / (float)this->visible_before_hit_ms);
+            RhythmNote* current_note = this->notes[idx];
+            if (current_note->start_ms < visible_pos_start || current_note->start_ms > visible_pos_end) {
+                continue;
+            }
+
+            float progress = 1 - ((float)(current_note->start_ms - song_pos) / (float)this->visible_before_hit_ms);
             int light_idx = floor(progress * (float)(this->goal_led_idx));
             if (light_idx >= Drivers::lights_driver.lights_count) continue;
 

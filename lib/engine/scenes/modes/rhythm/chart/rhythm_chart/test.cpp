@@ -43,6 +43,6 @@ namespace Engine {
     RhythmChart chart_test{
         "Test",
         SongIDs::SETUP,
-        chart_test_notes, 32
+        chart_test_notes, 28
     };
 }
