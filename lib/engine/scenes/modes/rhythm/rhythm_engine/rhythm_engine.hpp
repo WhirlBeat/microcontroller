@@ -21,7 +21,7 @@ namespace Engine {
 
         long start_time = 0;
 
-        int visible_before_hit_ms = 1000;
+        int visible_before_hit_ms = 2000;
         int timing_window_ms = 500;
 
         RhythmNote* notes[RhythmChart::MAX_NOTES];
@@ -29,7 +29,7 @@ namespace Engine {
         int visible_notes_start_idx = 0;
         int visible_notes_end_idx = 0;
 
-        int goal_led_idx = 20; // floor((float)(Drivers::lights_driver.lights_count - 1) * 0.75F);
+        int goal_led_idx = floor((float)(Drivers::lights_driver.lights_count - 1) * 0.75F);
 
 
         RhythmEngineScenePart();

@@ -74,7 +74,7 @@ namespace Engine {
             int light_idx = floor(progress * (float)(this->goal_led_idx));
             if (light_idx >= Drivers::lights_driver.lights_count) continue;
 
-            Drivers::lights_driver.led_array[light_idx] = CRGB::AliceBlue;
+            Drivers::lights_driver.led_array[light_idx] = CRGB::Green;
         }
 
         Drivers::lights_driver.led_array[this->goal_led_idx] = CRGB::White;
