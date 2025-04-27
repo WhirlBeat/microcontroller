@@ -27,6 +27,7 @@ namespace Engine {
 
         this->combo = 0;
         this->score = 0;
+        this->unweighted_score = 0;
     }
 
     void RhythmEngineScenePart::tick() {
@@ -159,5 +160,6 @@ namespace Engine {
 
     void RhythmEngineScenePart::add_score(int base_score) {
         this->score += floor((float)base_score * (1.0F + (((float)this->combo) / 25.0F)));
+        this->unweighted_score += base_score;
     }
 }

@@ -50,6 +50,8 @@ namespace Engine {
 
         const char* previous_judgement = "";
         int combo = 0;
+
+        int unweighted_score = 0;
         int score = 0;
 
 

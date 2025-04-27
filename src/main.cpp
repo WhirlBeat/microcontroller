@@ -8,7 +8,7 @@
 #include <colors.hpp>
 
 
-Engine::RhythmModePlayScene scene{};
+Engine::MainMenuScene scene{};
 
 Tools::TPS tps;
 
@@ -21,7 +21,7 @@ void setup() {
     Serial.begin(115200);
     while (!Serial) delay(100);
 
-    // Drivers::api_driver.begin();
+    Drivers::api_driver.begin();
 
     Drivers::button_driver_action.tick();
     if (Drivers::button_driver_action.check_hold()) {
@@ -34,7 +34,7 @@ void setup() {
         while (true) { delay(10000); }
     }
 
-    scene.init(&Engine::chart_test);
+    scene.init();
     Engine::scene_loader.switch_scene(&scene);
 }
 

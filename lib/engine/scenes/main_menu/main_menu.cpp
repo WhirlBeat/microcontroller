@@ -33,6 +33,9 @@ namespace Engine {
             if (this->select_menu.get_selected_idx() == 0) {
                 this->timing_mode_scene.init();
                 scene_loader.switch_scene(&this->timing_mode_scene);
+            } else if (this->select_menu.get_selected_idx() == 1) {
+                this->rhythm_mode_scene.init();
+                scene_loader.switch_scene(&this->rhythm_mode_scene);
             }
         }
     }

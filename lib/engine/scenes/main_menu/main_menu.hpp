@@ -22,6 +22,7 @@ namespace Engine {
 
 
         TimingModeSetupScene timing_mode_scene;
+        RhythmModeSetupScene rhythm_mode_scene;
 
 
         static const int ROW_SELECT_MENU = 2;

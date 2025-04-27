@@ -28,8 +28,6 @@ namespace Drivers {
     }
 
     void MusicDriver::tick() {
-        if (this->current_song_id < 0) return;
-
         if (this->current_song_id != this->previous_song_id) {
             Serial.println(String("Now playing ") + this->current_song_id);
             if (this->current_song_id < 0) {
