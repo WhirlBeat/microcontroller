@@ -22,6 +22,8 @@ namespace Engine {
 
         this->visible_notes_start_idx = 0;
         this->visible_notes_end_idx = 0;
+
+        this->target_note_idx = 0;
     }
 
     void RhythmEngineScenePart::tick() {
@@ -70,6 +72,10 @@ namespace Engine {
         Drivers::lights_driver.clear_led_array();
 
         for (int idx = this->visible_notes_start_idx; idx <= this->visible_notes_end_idx; idx++) {
+            if (idx < this->target_note_idx) continue;
+            if (idx >= this->note_count) continue;
+
+
             RhythmNote* current_note = this->notes[idx];
             if (current_note->start_ms < visible_pos_start || current_note->start_ms > visible_pos_end) {
                 continue;
@@ -83,6 +89,42 @@ namespace Engine {
         }
 
         Drivers::lights_driver.led_array[this->goal_led_idx] = CRGB::White;
+
+
+
+        RhythmNote* target_note = this->notes[this->target_note_idx];
+
+        while (true) {
+            if (this->target_note_idx >= this->note_count) break;
+    
+            if (this->notes[this->target_note_idx]->start_ms < visible_pos_start) this->target_note_idx++;
+            else break;
+        }
+
+
+        int perfect_timing_window = floor((float)this->timing_window_ms * (1.0F/3.0F));
+        int good_timing_window = floor((float)this->timing_window_ms * (2.0F/3.0F));
+        int ok_timing_window = this->timing_window_ms;
+
+        if (Drivers::button_driver_action.check_click()) {
+            int difference = abs(target_note->start_ms - time_pos);
+
+            if (difference < perfect_timing_window) {
+                Drivers::display_driver.print_center(0, String(this->perfect_score_add).c_str());
+            }
+            else if (difference < good_timing_window) {
+                Drivers::display_driver.print_center(0, String(this->good_score_add).c_str());
+            }
+            else if (difference < ok_timing_window) {
+                Drivers::display_driver.print_center(0, String(this->ok_score_add).c_str());
+            }
+            else {
+                Drivers::display_driver.print_center(0, "MISS");
+            }
+
+
+            this->target_note_idx++;
+        }
     }
 
 
